@@ -1,15 +1,14 @@
-# Battleship Ultimate Premium Edition
+# **battleship_project**
+# **_Battleship Ultimate Premium Edition_**
 
 ## **Beschreibung:**
 Schiffe versenken ist eine Plattform unabhängige App für zwei Spieler, die in JAVA programmiert wird.
-
 ## **Vorstellung des Teams:**
 - Nikita (Head of Programming/Backend & Frontend) 
 - Moritz (Frontend)
 - Hoang (Backend)
 - Lana (Backend)
 - Team (Tester)
-
 ## **Grundfunktionen:**
 - Verbindung zwischen Spielern herstellen (Erweiterung Login) Leeres Spielfeld erstellen
 - Platzierung von Schiffen (Wird von App ermöglicht und vom Spieler selber getätigt)
@@ -18,12 +17,10 @@ Schiffe versenken ist eine Plattform unabhängige App für zwei Spieler, die in 
 - Backend antwortet: Ob Schiff getroffen/ Ob Schiff versenkt Frontend muss entsprechend reagieren(Anzeigen)
 - Benachrichtigungen, wenn Jemand gewonnen/verloren hat +Gratulation
 - Erweiterung Statistik speichern
-
 ## **Technologien:**
 - JAVA 
 - JavaFx (FXML?)
 - Socket 
-
 ## **Ideen:**
 - 2 Spielfelder
 - Spielanleitung
