@@ -4,7 +4,8 @@ Beschreibung:
 Schiffe versenken ist eine Plattform unabhängige App für zwei Spieler, die in JAVA programmiert wird.
 
 Vorstellung des Teams:
-- Nikita (Head of Programming/Backend & Frontend) Moritz (Frontend)
+- Nikita (Head of Programming/Backend & Frontend) 
+- Moritz (Frontend)
 - Hoang (Backend)
 - Lana (Backend)
 - Team (Tester)
@@ -18,7 +19,7 @@ Grundfunktionen:
 - Benachrichtigungen, wenn Jemand gewonnen/verloren hat +Gratulation
 - Erweiterung Statistik speichern
 
-Technologie/n:
+Technologien:
 -JAVA 
 -JavaFx (FXML?)
 -Socket 
