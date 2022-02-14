@@ -2,6 +2,8 @@ package bs.service;
 
 import bs.dao.BackendDAOImp;
 
+import java.util.Arrays;
+
 public class SpielFeldServiceImp implements SpielFeldService {
     private static SpielFeldServiceImp instance;
     private BackendDAOImp backendDAOImp;
@@ -15,7 +17,10 @@ public class SpielFeldServiceImp implements SpielFeldService {
 
     @Override
     public boolean istValide(int[][] feld) {
-        return backendDAOImp.istValide(feld);
+        int[][] tempFeld = Arrays.stream(feld)
+                .map(int[]::clone)
+                .toArray(int[][]::new);
+        return backendDAOImp.istValide(tempFeld);
     }
 
     @Override

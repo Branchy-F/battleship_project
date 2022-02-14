@@ -11,11 +11,7 @@ public class Validator {
     private final int anzahlCruisers;
     private final int anzahlDestroyer;
     private final int anzahlSubmarines;
-
     private final int laengeBattleship = 4;
-    private final int laengeCruisers = 3;
-    private final int laengeDestroyer = 2;
-    private final int laengeSubmarines = 1;
 
     public Validator(int anzahlBattleship, int anzahlCruisers, int anzahlDestroyer, int anzahlSubmarines) {
         this.anzahlBattleship = anzahlBattleship;
@@ -25,7 +21,6 @@ public class Validator {
     }
 
     public boolean fieldValidator(int[][] field) {
-
         List<List<int[]>> ships = new ArrayList<>();
         List<int[]> found_ship;
 
@@ -33,10 +28,11 @@ public class Validator {
             for (int j = 0; j < field[i].length; j++){
                 if(field[i][j] == 1){
                     found_ship = findAllParts(i, j, field);
-                    for(int[] ship: found_ship) { if (Arrays.equals(ship, new int[]{-1, -1})) return false; }
-
-                    if (!found_ship.isEmpty() && found_ship.size() <= laengeBattleship) { ships.add(found_ship); }
-                    else if (found_ship.size() > laengeBattleship) { return false; }
+                    for(int[] ship: found_ship) {
+                        if (Arrays.equals(ship, new int[]{-1, -1})) return false;
+                    }
+                    if (!found_ship.isEmpty() && found_ship.size() <= 4) ships.add(found_ship);
+                    else if (found_ship.size() > 4) return false;
                 }
             }
         }
@@ -54,7 +50,7 @@ public class Validator {
                     battleship++; break;
             }
         }
-        return submarines == anzahlSubmarines && destroyers == anzahlDestroyer && cruisers == anzahlCruisers && battleship == anzahlBattleship;
+        return submarines == 4 && destroyers == 3 && cruisers == 2 && battleship == 1;
     }
 
     public List<int[]> findAllParts(int i, int j, int[][] field) {

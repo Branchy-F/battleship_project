@@ -46,7 +46,7 @@ public class AppTest extends Application {
         hBoxCheck.setAlignment(Pos.CENTER_LEFT);
 
 
-        VBox vBox = new VBox(hBoxCheck);
+        VBox vBox = new VBox(hBoxCheck, bAusgeben);
         for (int j = 0; j < 10; j++){
             HBox zeile = new HBox();
             for (int i = 0; i < 10; i++){
