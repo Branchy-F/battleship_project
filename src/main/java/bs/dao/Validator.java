@@ -4,22 +4,9 @@ package bs.dao;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class Validator {
-    public static void main(String[] args) {
-        int[][] battleField = {{1, 0, 0, 0, 0, 1, 1, 0, 0, 0},
-                               {1, 0, 1, 0, 0, 0, 0, 0, 1, 0},
-                               {1, 0, 1, 0, 1, 1, 1, 0, 1, 0},
-                               {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                               {0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
-                               {0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
-                               {0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
-                               {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
-                               {0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
-                               {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
-
-        System.out.println("RESULT: " + fieldValidator(battleField));
-    }
     public static boolean fieldValidator(int[][] field) {
             List<List<int[]>> ships = new ArrayList<>();
             List<int[]> found_ship;
@@ -28,11 +15,9 @@ public class Validator {
                 for (int j = 0; j < field[i].length; j++){
                     if(field[i][j] == 1){
                         found_ship = findAllParts(i, j, field);
-                        for(int[] ship: found_ship) {
-                            if (Arrays.equals(ship, new int[]{-1, -1})) return false;
-                        }
-                        if (!found_ship.isEmpty() && found_ship.size() <= 4) ships.add(found_ship);
-                        else if (found_ship.size() > 4) return false;
+                        for(int[] ship: found_ship) { if (Arrays.equals(ship, new int[]{-1, -1})) return false; }
+                        if (istEinSchiff(found_ship)) { ships.add(found_ship); }
+                        else if (found_ship.size() > 4) { return false; }
                     }
                 }
             }
@@ -53,19 +38,21 @@ public class Validator {
         return submarines == 4 && destroyers == 3 && cruisers == 2 && battleship == 1;
     }
 
+    private static boolean istEinSchiff(List<int[]> found_ship) {
+        return (!found_ship.isEmpty() && found_ship.size() <= 4);
+    }
+
     public static List<int[]> findAllParts(int i, int j, int[][] field) {
         List<int[]> ship = new ArrayList<>();
         int found_part;
-
         field[i][j] = 8;
         ship.add(new int[]{i,j});                                         // add first part  to the ship
-
         found_part = findNextPart(field, i, j, 0);            // find second part
 
         while (true){
-            if (found_part == 0) break;
-            else if (found_part == -1) return List.of(new int[] {-1,-1}); // '-1' part has forbidden coordinates
-            else {                                                        // find next part
+            if (found_part == 0) { break; }
+            else if (found_part == -1) { return List.of(new int[] {-1,-1}); } // '-1' part has forbidden coordinates
+            else {                                                            // find next part
                 switch (found_part){
                     case 1: // has a part on the right side
                         j++; break;
@@ -107,17 +94,17 @@ public class Validator {
 
         for (int[] c: forbidden_coordinates) {
             try {
-                if (field[c[0]][c[1]] == 1) return -1;
+                if (field[c[0]][c[1]] == 1) { return -1; }
             } catch (IndexOutOfBoundsException ignored){ }
         }
 
         for (int[] c: search_coordinates) {
             try {
                 if (field[c[0]][c[1]] == 1) {
-                    if (c[1] > j) return 1;      // part right
-                    else if (c[0] > i) return 2; // part down
-                    else if (c[1] < j) return 3; // part left
-                    else if (c[0] < i) return 4; // part up
+                    if (c[1] > j) { return 1; }     // part right
+                    else if (c[0] > i) { return 2; } // part down
+                    else if (c[1] < j) { return 3; } // part left
+                    else if (c[0] < i) { return 4; } // part up
                 }
             } catch (IndexOutOfBoundsException ignored){ }
         }
