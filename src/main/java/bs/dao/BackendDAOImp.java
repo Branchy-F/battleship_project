@@ -13,7 +13,7 @@ public class BackendDAOImp implements BackendDAO{
 
     @Override
     public boolean istValide(int[][] feld) {
-        return false;
+        return Validator.fieldValidator(feld);
     }
 
     @Override
