@@ -1,4 +1,4 @@
-package de.battleship.service;
+package bs.service;
 
 import java.io.IOException;
 
