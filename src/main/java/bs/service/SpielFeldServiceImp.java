@@ -20,16 +20,19 @@ public class SpielFeldServiceImp implements SpielFeldService {
 
     @Override
     public boolean istGetroffen(int[] koordinaten) {
-        return backendDAOImp.istGetroffen(koordinaten);
+
+        return false;
     }
 
     @Override
-    public int[] istVersentkt(int[] koordinaten) {
-        return backendDAOImp.istVersentkt(koordinaten);
+    public int[] istVersenkt(int[] koordinaten) {
+
+        return null;
     }
 
     @Override
     public int spielenWeiter() {
-        return backendDAOImp.spielenWeiter();
+
+        return 0;
     }
 }
