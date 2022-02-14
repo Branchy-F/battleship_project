@@ -1,4 +1,4 @@
-package bs.service;
+package bs.dao;
 
 
 import java.util.ArrayList;

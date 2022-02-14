@@ -17,17 +17,8 @@ public class BackendDAOImp implements BackendDAO{
     }
 
     @Override
-    public boolean istGetroffen(int[] koordinaten) {
-        return false;
+    public Antwort istGetroffen(int x, int y) {
+        return null;
     }
 
-    @Override
-    public int[] istVersentkt(int[] koordinaten) {
-        return new int[0];
-    }
-
-    @Override
-    public int spielenWeiter() {
-        return 0;
-    }
 }
