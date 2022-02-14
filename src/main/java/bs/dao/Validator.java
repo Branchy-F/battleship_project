@@ -21,21 +21,21 @@ public class Validator {
         System.out.println("RESULT: " + fieldValidator(battleField));
     }
     public static boolean fieldValidator(int[][] field) {
-        List<List<int[]>> ships = new ArrayList<>();
-        List<int[]> found_ship;
+            List<List<int[]>> ships = new ArrayList<>();
+            List<int[]> found_ship;
 
-        for (int i = 0; i < field.length; i++){
-            for (int j = 0; j < field[i].length; j++){
-                if(field[i][j] == 1){
-                    found_ship = findAllParts(i, j, field);
-                    for(int[] ship: found_ship) {
-                        if (Arrays.equals(ship, new int[]{-1, -1})) return false;
+            for (int i = 0; i < field.length; i++){
+                for (int j = 0; j < field[i].length; j++){
+                    if(field[i][j] == 1){
+                        found_ship = findAllParts(i, j, field);
+                        for(int[] ship: found_ship) {
+                            if (Arrays.equals(ship, new int[]{-1, -1})) return false;
+                        }
+                        if (!found_ship.isEmpty() && found_ship.size() <= 4) ships.add(found_ship);
+                        else if (found_ship.size() > 4) return false;
                     }
-                    if (!found_ship.isEmpty() && found_ship.size() <= 4) ships.add(found_ship);
-                    else if (found_ship.size() > 4) return false;
                 }
             }
-        }
 
         int battleship = 0, cruisers = 0, destroyers = 0, submarines = 0;
         for (List<int[]> ship: ships){
