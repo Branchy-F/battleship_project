@@ -3,17 +3,12 @@ package bs.gui;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
-import javafx.scene.control.TitledPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.util.Arrays;
-import java.util.List;
-
-public class App extends Application {
+public class AppTest extends Application {
 
     static Stage primaryStage;
     public static void main(String[] args) {
