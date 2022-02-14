@@ -7,20 +7,39 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class Validator {
-    public static boolean fieldValidator(int[][] field) {
-            List<List<int[]>> ships = new ArrayList<>();
-            List<int[]> found_ship;
+    private final int anzahlBattleship;
+    private final int anzahlCruisers;
+    private final int anzahlDestroyer;
+    private final int anzahlSubmarines;
 
-            for (int i = 0; i < field.length; i++){
-                for (int j = 0; j < field[i].length; j++){
-                    if(field[i][j] == 1){
-                        found_ship = findAllParts(i, j, field);
-                        for(int[] ship: found_ship) { if (Arrays.equals(ship, new int[]{-1, -1})) return false; }
-                        if (istEinSchiff(found_ship)) { ships.add(found_ship); }
-                        else if (found_ship.size() > 4) { return false; }
-                    }
+    private final int laengeBattleship = 4;
+    private final int laengeCruisers = 3;
+    private final int laengeDestroyer = 2;
+    private final int laengeSubmarines = 1;
+
+    public Validator(int anzahlBattleship, int anzahlCruisers, int anzahlDestroyer, int anzahlSubmarines) {
+        this.anzahlBattleship = anzahlBattleship;
+        this.anzahlCruisers = anzahlCruisers;
+        this.anzahlDestroyer = anzahlDestroyer;
+        this.anzahlSubmarines = anzahlSubmarines;
+    }
+
+    public boolean fieldValidator(int[][] field) {
+
+        List<List<int[]>> ships = new ArrayList<>();
+        List<int[]> found_ship;
+
+        for (int i = 0; i < field.length; i++){
+            for (int j = 0; j < field[i].length; j++){
+                if(field[i][j] == 1){
+                    found_ship = findAllParts(i, j, field);
+                    for(int[] ship: found_ship) { if (Arrays.equals(ship, new int[]{-1, -1})) return false; }
+
+                    if (!found_ship.isEmpty() && found_ship.size() <= laengeBattleship) { ships.add(found_ship); }
+                    else if (found_ship.size() > laengeBattleship) { return false; }
                 }
             }
+        }
 
         int battleship = 0, cruisers = 0, destroyers = 0, submarines = 0;
         for (List<int[]> ship: ships){
@@ -35,14 +54,10 @@ public class Validator {
                     battleship++; break;
             }
         }
-        return submarines == 4 && destroyers == 3 && cruisers == 2 && battleship == 1;
+        return submarines == anzahlSubmarines && destroyers == anzahlDestroyer && cruisers == anzahlCruisers && battleship == anzahlBattleship;
     }
 
-    private static boolean istEinSchiff(List<int[]> found_ship) {
-        return (!found_ship.isEmpty() && found_ship.size() <= 4);
-    }
-
-    public static List<int[]> findAllParts(int i, int j, int[][] field) {
+    public List<int[]> findAllParts(int i, int j, int[][] field) {
         List<int[]> ship = new ArrayList<>();
         int found_part;
         field[i][j] = 8;
@@ -74,7 +89,7 @@ public class Validator {
     }
     //previous_part: '0'-no found parts, '1'-left, '2'-up, '3'-right, '4'-down
     //returns: '0'-ship hasn't other parts, '1'-right, '2'-down, '3'-left, '4'-up
-    public static int findNextPart(int[][] field, int i, int j, int previous_part) {
+    public int findNextPart(int[][] field, int i, int j, int previous_part) {
         int[][] search_coordinates = new int[][]{{i + 1, j}, {i - 1, j}, {i, j + 1}, {i, j - 1}};
         int[][] forbidden_coordinates;
 
