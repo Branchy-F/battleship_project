@@ -4,20 +4,19 @@ package bs.dao;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Predicate;
 
 public class Validator {
     private final int anzahlBattleship;
-    private final int anzahlCruisers;
+    private final int anzahlCruiser;
     private final int anzahlDestroyer;
-    private final int anzahlSubmarines;
+    private final int anzahlSubmarine;
     private final int laengeBattleship = 4;
 
-    public Validator(int anzahlBattleship, int anzahlCruisers, int anzahlDestroyer, int anzahlSubmarines) {
+    public Validator(int anzahlBattleship, int anzahlCruiser, int anzahlDestroyer, int anzahlSubmarine) {
         this.anzahlBattleship = anzahlBattleship;
-        this.anzahlCruisers = anzahlCruisers;
+        this.anzahlCruiser = anzahlCruiser;
         this.anzahlDestroyer = anzahlDestroyer;
-        this.anzahlSubmarines = anzahlSubmarines;
+        this.anzahlSubmarine = anzahlSubmarine;
     }
 
     public boolean fieldValidator(int[][] field) {
@@ -31,8 +30,8 @@ public class Validator {
                     for(int[] ship: found_ship) {
                         if (Arrays.equals(ship, new int[]{-1, -1})) return false;
                     }
-                    if (!found_ship.isEmpty() && found_ship.size() <= 4) ships.add(found_ship);
-                    else if (found_ship.size() > 4) return false;
+                    if (!found_ship.isEmpty() && found_ship.size() <= laengeBattleship) ships.add(found_ship);
+                    else if (found_ship.size() > laengeBattleship) return false;
                 }
             }
         }
@@ -50,7 +49,7 @@ public class Validator {
                     battleship++; break;
             }
         }
-        return submarines == 4 && destroyers == 3 && cruisers == 2 && battleship == 1;
+        return submarines == anzahlSubmarine && destroyers == anzahlDestroyer && cruisers == anzahlCruiser && battleship == anzahlBattleship;
     }
 
     public List<int[]> findAllParts(int i, int j, int[][] field) {
