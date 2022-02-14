@@ -20,19 +20,16 @@ public class SpielFeldServiceImp implements SpielFeldService {
 
     @Override
     public boolean istGetroffen(int[] koordinaten) {
-
         return false;
     }
 
     @Override
     public int[] istVersenkt(int[] koordinaten) {
-
         return null;
     }
 
     @Override
     public int spielenWeiter() {
-
         return 0;
     }
 }

@@ -4,38 +4,42 @@ package bs.dao;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class Validator {
-    public static void main(String[] args) {
-        int[][] battleField = {{1, 0, 0, 0, 0, 1, 1, 0, 0, 0},
-                               {1, 0, 1, 0, 0, 0, 0, 0, 1, 0},
-                               {1, 0, 1, 0, 1, 1, 1, 0, 1, 0},
-                               {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                               {0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
-                               {0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
-                               {0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
-                               {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
-                               {0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
-                               {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+    private final int anzahlBattleship;
+    private final int anzahlCruisers;
+    private final int anzahlDestroyer;
+    private final int anzahlSubmarines;
 
-        System.out.println("RESULT: " + fieldValidator(battleField));
+    private final int laengeBattleship = 4;
+    private final int laengeCruisers = 3;
+    private final int laengeDestroyer = 2;
+    private final int laengeSubmarines = 1;
+
+    public Validator(int anzahlBattleship, int anzahlCruisers, int anzahlDestroyer, int anzahlSubmarines) {
+        this.anzahlBattleship = anzahlBattleship;
+        this.anzahlCruisers = anzahlCruisers;
+        this.anzahlDestroyer = anzahlDestroyer;
+        this.anzahlSubmarines = anzahlSubmarines;
     }
-    public static boolean fieldValidator(int[][] field) {
-            List<List<int[]>> ships = new ArrayList<>();
-            List<int[]> found_ship;
 
-            for (int i = 0; i < field.length; i++){
-                for (int j = 0; j < field[i].length; j++){
-                    if(field[i][j] == 1){
-                        found_ship = findAllParts(i, j, field);
-                        for(int[] ship: found_ship) {
-                            if (Arrays.equals(ship, new int[]{-1, -1})) return false;
-                        }
-                        if (!found_ship.isEmpty() && found_ship.size() <= 4) ships.add(found_ship);
-                        else if (found_ship.size() > 4) return false;
-                    }
+    public boolean fieldValidator(int[][] field) {
+
+        List<List<int[]>> ships = new ArrayList<>();
+        List<int[]> found_ship;
+
+        for (int i = 0; i < field.length; i++){
+            for (int j = 0; j < field[i].length; j++){
+                if(field[i][j] == 1){
+                    found_ship = findAllParts(i, j, field);
+                    for(int[] ship: found_ship) { if (Arrays.equals(ship, new int[]{-1, -1})) return false; }
+
+                    if (!found_ship.isEmpty() && found_ship.size() <= laengeBattleship) { ships.add(found_ship); }
+                    else if (found_ship.size() > laengeBattleship) { return false; }
                 }
             }
+        }
 
         int battleship = 0, cruisers = 0, destroyers = 0, submarines = 0;
         for (List<int[]> ship: ships){
@@ -50,22 +54,20 @@ public class Validator {
                     battleship++; break;
             }
         }
-        return submarines == 4 && destroyers == 3 && cruisers == 2 && battleship == 1;
+        return submarines == anzahlSubmarines && destroyers == anzahlDestroyer && cruisers == anzahlCruisers && battleship == anzahlBattleship;
     }
 
-    public static List<int[]> findAllParts(int i, int j, int[][] field) {
+    public List<int[]> findAllParts(int i, int j, int[][] field) {
         List<int[]> ship = new ArrayList<>();
         int found_part;
-
         field[i][j] = 8;
         ship.add(new int[]{i,j});                                         // add first part  to the ship
-
         found_part = findNextPart(field, i, j, 0);            // find second part
 
         while (true){
-            if (found_part == 0) break;
-            else if (found_part == -1) return List.of(new int[] {-1,-1}); // '-1' part has forbidden coordinates
-            else {                                                        // find next part
+            if (found_part == 0) { break; }
+            else if (found_part == -1) { return List.of(new int[] {-1,-1}); } // '-1' part has forbidden coordinates
+            else {                                                            // find next part
                 switch (found_part){
                     case 1: // has a part on the right side
                         j++; break;
@@ -87,7 +89,7 @@ public class Validator {
     }
     //previous_part: '0'-no found parts, '1'-left, '2'-up, '3'-right, '4'-down
     //returns: '0'-ship hasn't other parts, '1'-right, '2'-down, '3'-left, '4'-up
-    public static int findNextPart(int[][] field, int i, int j, int previous_part) {
+    public int findNextPart(int[][] field, int i, int j, int previous_part) {
         int[][] search_coordinates = new int[][]{{i + 1, j}, {i - 1, j}, {i, j + 1}, {i, j - 1}};
         int[][] forbidden_coordinates;
 
@@ -107,17 +109,17 @@ public class Validator {
 
         for (int[] c: forbidden_coordinates) {
             try {
-                if (field[c[0]][c[1]] == 1) return -1;
+                if (field[c[0]][c[1]] == 1) { return -1; }
             } catch (IndexOutOfBoundsException ignored){ }
         }
 
         for (int[] c: search_coordinates) {
             try {
                 if (field[c[0]][c[1]] == 1) {
-                    if (c[1] > j) return 1;      // part right
-                    else if (c[0] > i) return 2; // part down
-                    else if (c[1] < j) return 3; // part left
-                    else if (c[0] < i) return 4; // part up
+                    if (c[1] > j) { return 1; }     // part right
+                    else if (c[0] > i) { return 2; } // part down
+                    else if (c[1] < j) { return 3; } // part left
+                    else if (c[0] < i) { return 4; } // part up
                 }
             } catch (IndexOutOfBoundsException ignored){ }
         }
