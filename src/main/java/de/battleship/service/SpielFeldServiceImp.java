@@ -23,6 +23,14 @@ public class SpielFeldServiceImp implements SpielFeldService {
         } catch (IOException e) { e.printStackTrace(); }
     }
 
+    public SpielFeldServiceImp() { //für Testzwecke
+        backendDAO = new BackendDAOImp();
+        try {
+            bs = new BSSocket(this,"192.168.1.10", 22000, 22001);
+//            bs = new BSSocket(this, "192.168.1.11", 22001, 22000);
+        } catch (IOException e) { e.printStackTrace(); }
+    }
+
     @Override
     //'x' und 'y' von der GUI erhalten
     public void zugAbschicken(int x, int y){
