@@ -61,7 +61,7 @@ public class BSSocket {
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
             aktiv = true;
             while (aktiv) {
-                Kommando kdo = (Kommando) in.readObject();
+                Zug kdo = (Zug) in.readObject();
                 verarbeite(kdo);
             }
             in.close();
@@ -71,7 +71,7 @@ public class BSSocket {
         }
     }
 
-    private void verarbeite(Kommando kdo) {
+    private void verarbeite(Zug kdo) {
         //dummy
         System.out.println("Kommando: " + kdo.toString());
     }
@@ -80,7 +80,7 @@ public class BSSocket {
         return out != null;
     }
 
-    public void sende(Kommando kommando) throws IOException {
+    public void sende(Zug kommando) throws IOException {
         out.writeObject(kommando);
     }
 
