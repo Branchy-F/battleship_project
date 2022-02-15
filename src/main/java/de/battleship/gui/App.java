@@ -1,17 +1,9 @@
-package bs.gui;
+package de.battleship.gui;
 
 
 import javafx.application.Application;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.TitledPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class App extends Application {
 

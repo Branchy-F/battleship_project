@@ -1,4 +1,4 @@
-package bs.dao;
+package de.battleship.dao;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,11 +11,6 @@ public class BackendDAOImp implements BackendDAO{
     private boolean schonMalGeschossen;
 
     public BackendDAOImp() {
-    }
-
-    public static BackendDAOImp getInstance(){
-        if (instance == null) { instance = new BackendDAOImp(); }
-        return instance;
     }
 
     @Override

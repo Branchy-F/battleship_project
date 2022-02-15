@@ -1,4 +1,4 @@
-package bs.dao;
+package de.battleship.dao;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DAOTest {
-    static BackendDAOImp backendDAOImp = new BackendDAOImp();
+    static BackendDAO backendDAO = new BackendDAOImp();
 
     @Test
     void testValide() {
@@ -23,7 +23,7 @@ public class DAOTest {
                             {0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
-        boolean check = backendDAOImp.istValide(testFeld,1,2,3,4);
+        boolean check = backendDAO.istValide(testFeld,1,2,3,4);
         assertTrue(check);
     }
 
