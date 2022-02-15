@@ -18,6 +18,8 @@ public class SpielFeldServiceImp implements SpielFeldService {
         this.app = app;
     }
 
+    public SpielFeldServiceImp() { backendDAO = new BackendDAOImp(); }
+
     //'x' und 'y' von der GUI erhalten
     public void anfrageAbschicken(int x, int y){
         Zug zug = new Zug(x, y);
