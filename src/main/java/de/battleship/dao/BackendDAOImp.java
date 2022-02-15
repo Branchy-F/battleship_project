@@ -2,23 +2,20 @@ package de.battleship.dao;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class BackendDAOImp implements BackendDAO{
-    private static BackendDAOImp instance = null;
     private int[][] feld;
     List<List<int[]>> schiffe;
     private List<int[]> letztesVersenktesSchiff;
     private boolean schonMalGeschossen;
-
-    public BackendDAOImp() {
-    }
 
     @Override
     public boolean istValide(int[][] feld, int anzahlBattleship, int anzahlCruiser, int anzahlDestroyer, int anzahlSubmarine) {
         Validator validator = new Validator(anzahlBattleship, anzahlCruiser, anzahlDestroyer, anzahlSubmarine);
         if (validator.fieldValidator(feld)){
             setFeld(feld);
-            this.schiffe = validator.getSchiffe();
+            setSchiffe(validator.getSchiffe());
             return true;
         }
         else { return false; }
@@ -47,8 +44,9 @@ public class BackendDAOImp implements BackendDAO{
 
     @Override
     public boolean istVersenkt(int x, int y) {
+
         for (List<int[]> schiff: schiffe){
-            if (schiff.contains(new int[]{x,y})){
+            if (schiff.stream().anyMatch(a -> Arrays.equals(a, new int[]{x,y}))){
                 for (int[] schiffsteil: schiff){ //Prüfen, ob das Schiff noch nicht getroffene Teile hat
                     if (feld[schiffsteil[0]][schiffsteil[1]] == 1) { return false; } //Nicht versenkt
                 }
@@ -71,13 +69,9 @@ public class BackendDAOImp implements BackendDAO{
 
     @Override //noch nicht testen
     public List<int[]> getLetztesVersenktesSchiff() { return letztesVersenktesSchiff; }
-
     @Override
-    public int[][] getFeld() {
-        return feld;
-    }
+    public void setFeld(int[][] feld) {this.feld = Arrays.stream(feld).map(int[]::clone).toArray(int[][]::new); }
     @Override
-    public void setFeld(int[][] feld) {
-        this.feld = Arrays.stream(feld).map(int[]::clone).toArray(int[][]::new);
-    }
+    public List<List<int[]>> getSchiffe() { return schiffe; }
+    private void setSchiffe(List<List<int[]>> schiffe) { this.schiffe = schiffe; }
 }
