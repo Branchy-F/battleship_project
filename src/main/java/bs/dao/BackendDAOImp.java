@@ -33,13 +33,16 @@ public class BackendDAOImp implements BackendDAO{
     public boolean istGetroffen(int x, int y) {
         this.schonMalGeschossen = false;
 
-        if (feld[x][y] == 1) {
+        if (feld[x][y] == 1)
+        {
             feld[x][y] = 8; // Koordinaten vom getroffenen Schiffsteil
             return true;
         }
         else {
-            if (feld[x][y] == 5 || feld[x][y] == 8) { this.schonMalGeschossen = true; }
-            else { feld[x][y] = 5; } // Daneben geschossen
+            if (feld[x][y] == 5 || feld[x][y] == 8)
+            { this.schonMalGeschossen = true; }
+            else
+            { feld[x][y] = 5; } // Daneben geschossen
             return false;
         }
     }
