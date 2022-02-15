@@ -13,11 +13,6 @@ public class BackendDAOImp implements BackendDAO{
     public BackendDAOImp() {
     }
 
-    public static BackendDAOImp getInstance(){
-        if (instance == null) { instance = new BackendDAOImp(); }
-        return instance;
-    }
-
     @Override
     public boolean istValide(int[][] feld, int anzahlBattleship, int anzahlCruiser, int anzahlDestroyer, int anzahlSubmarine) {
         Validator validator = new Validator(anzahlBattleship,anzahlCruiser,anzahlDestroyer,anzahlSubmarine);

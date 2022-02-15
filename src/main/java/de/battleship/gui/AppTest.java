@@ -1,6 +1,7 @@
 package de.battleship.gui;
 
 
+import de.battleship.service.SpielFeldService;
 import de.battleship.service.SpielFeldServiceImp;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -17,7 +18,7 @@ import java.util.Arrays;
 public class AppTest extends Application {
 
     static Stage primaryStage;
-    private SpielFeldServiceImp spielFeldServiceImp;
+    private SpielFeldService spielFeldService;
     Label lAusgabe;
     Label lCheck;
     private int[][] feld = new int[10][10];
@@ -29,13 +30,13 @@ public class AppTest extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
 
-        spielFeldServiceImp = new SpielFeldServiceImp(this);
+        spielFeldService = new SpielFeldServiceImp(this);
 
         Button bAusgeben = new Button("Ausgeben");
         bAusgeben.setOnAction(e -> feldAusgeben());
 
         Button bCheckFeld = new Button("Check");
-        bCheckFeld.setOnAction(e -> lCheck.setText(String.valueOf(spielFeldServiceImp.istValide(feld))));
+        bCheckFeld.setOnAction(e -> lCheck.setText(String.valueOf(spielFeldService.istValide(feld))));
         lCheck = new Label("");
 
 

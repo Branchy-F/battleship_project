@@ -1,5 +1,6 @@
 package de.battleship.service;
 
+import de.battleship.dao.BackendDAO;
 import de.battleship.dao.BackendDAOImp;
 import de.battleship.gui.AppTest;
 
@@ -7,13 +8,13 @@ import java.util.Arrays;
 
 public class SpielFeldServiceImp implements SpielFeldService {
     private static SpielFeldServiceImp instance;
-    private BackendDAOImp backendDAOImp;
+    private BackendDAO backendDAO;
     private AppTest app;
     private int[][] spielFeldGegner = new int[10][10];
     private int[][] meinSpielFeld = new int[10][10];
 
     public SpielFeldServiceImp(AppTest app) {
-        backendDAOImp = BackendDAOImp.getInstance();
+        backendDAO = new BackendDAOImp();
         this.app = app;
     }
 
@@ -39,7 +40,7 @@ public class SpielFeldServiceImp implements SpielFeldService {
 
     @Override
     public boolean istValide(int[][] feld) {
-        if(backendDAOImp.istValide(feld, 1,2,3,4)){
+        if(backendDAO.istValide(feld, 1,2,3,4)){
             meinSpielFeld = Arrays.stream(feld).map(int[]::clone).toArray(int[][]::new);
             return true;
         }
@@ -51,15 +52,15 @@ public class SpielFeldServiceImp implements SpielFeldService {
         int x = zug.getX();
         int y = zug.getY();
         Antwort antwort = new Antwort();
-        if (backendDAOImp.istGetroffen(x, y)) {
+        if (backendDAO.istGetroffen(x, y)) {
             antwort.setGetroffen(true);
-            if (backendDAOImp.istVersenkt(x,y)) {
+            if (backendDAO.istVersenkt(x,y)) {
                 antwort.setVersenkt(true);
-                antwort.setKoordinaten(backendDAOImp.getLetztesVersenktesSchiff());
-                if(backendDAOImp.spielBeendet()) { antwort.setSpielBeendet(true); }
+                antwort.setKoordinaten(backendDAO.getLetztesVersenktesSchiff());
+                if(backendDAO.spielBeendet()) { antwort.setSpielBeendet(true); }
             }
         }
-        else{ if (backendDAOImp.schonMalGeschossen()) { antwort.setSchonMalGeschossen(true); } }
+        else{ if (backendDAO.schonMalGeschossen()) { antwort.setSchonMalGeschossen(true); } }
         return antwort;
     }
 
