@@ -10,10 +10,25 @@ import java.net.Socket;
 public class BSSocket {
     private ObjectOutputStream out;
     private boolean aktiv = false;
+    private SpielFeldService spielFeldService;
 
-    public BSSocket(String host, int port, int portGegner) throws IOException {
+    public BSSocket(SpielFeldService spielFeldService, String host, int port, int portGegner) throws IOException {
+        this.spielFeldService = spielFeldService;
         createSocket(port);
         verbindeMitGegner(host, portGegner);
+    }
+
+    public boolean isConnected() {
+        return out != null;
+    }
+    public void beende() {
+        aktiv = false;
+        try {
+            out.close();
+        } catch (IOException e) {
+            // TODO Errorhandling
+            e.printStackTrace();
+        }
     }
 
     private void verbindeMitGegner(String host, int portGegner) {
@@ -61,36 +76,22 @@ public class BSSocket {
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
             aktiv = true;
             while (aktiv) {
-                Zug kdo = (Zug) in.readObject();
-                verarbeite(kdo);
+                Object nachricht = in.readObject();
+                if (nachricht instanceof Zug) { verarbeite((Zug) nachricht); }
+                else if (nachricht instanceof Antwort) { verarbeite((Antwort) nachricht); }
             }
             in.close();
         } catch (IOException | ClassNotFoundException e) {
-            // TODO Errorhandling
-            e.printStackTrace();
+            throw new RuntimeException();
         }
     }
 
-    private void verarbeite(Zug kdo) {
-        //dummy
-        System.out.println("Kommando: " + kdo.toString());
+    private void verarbeite(Zug zug) throws IOException {
+        out.writeObject(spielFeldService.aufZugReagieren(zug));
+    }
+    private void verarbeite(Antwort antwort) {
+        spielFeldService.aufAntwortReagieren(antwort);
     }
 
-    public boolean isConnected() {
-        return out != null;
-    }
-
-    public void sende(Zug kommando) throws IOException {
-        out.writeObject(kommando);
-    }
-
-    public void beende() {
-        aktiv = false;
-        try {
-            out.close();
-        } catch (IOException e) {
-            // TODO Errorhandling
-            e.printStackTrace();
-        }
-    }
+    public void sendeZug(Zug zug) throws IOException { out.writeObject(zug); }
 }
