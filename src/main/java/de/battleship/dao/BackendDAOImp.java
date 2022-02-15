@@ -67,7 +67,7 @@ public class BackendDAOImp implements BackendDAO{
         return true;
     }
 
-    @Override //noch nicht testen
+    @Override
     public List<int[]> getLetztesVersenktesSchiff() { return letztesVersenktesSchiff; }
     @Override
     public void setFeld(int[][] feld) {this.feld = Arrays.stream(feld).map(int[]::clone).toArray(int[][]::new); }
