@@ -1,4 +1,4 @@
-package bs.service;
+package de.battleship.service;
 
 public interface SpielFeldService {
     boolean istValide (int[][] feld);

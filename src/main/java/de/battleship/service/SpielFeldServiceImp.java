@@ -1,10 +1,6 @@
-package bs.service;
+package de.battleship.service;
 
-import bs.dao.Antwort;
-import bs.dao.BackendDAOImp;
-
-import java.lang.reflect.AnnotatedType;
-import java.util.Arrays;
+import de.battleship.dao.BackendDAOImp;
 
 public class SpielFeldServiceImp implements SpielFeldService {
     private static SpielFeldServiceImp instance;
