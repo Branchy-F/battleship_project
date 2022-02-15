@@ -29,7 +29,7 @@ public class AppTest extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
 
-        spielFeldServiceImp = new SpielFeldServiceImp();
+        spielFeldServiceImp = new SpielFeldServiceImp(this);
 
         Button bAusgeben = new Button("Ausgeben");
         bAusgeben.setOnAction(e -> feldAusgeben());
