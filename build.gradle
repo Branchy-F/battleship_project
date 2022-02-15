@@ -25,7 +25,7 @@ jlink {
 }
 
 dependencies {
-    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.7.2'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.7.2'
     testRuntimeOnly group:  'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.7.2'
 }
 
