@@ -9,4 +9,8 @@ public interface BackendDAO {
     boolean istVersenkt(int x, int y);
     boolean spielBeendet();
     List<int[]> getLetztesVersenktesSchiff();
+
+    int[][] getFeld();
+
+    void setFeld(int[][] feld);
 }

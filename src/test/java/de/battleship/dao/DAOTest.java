@@ -1,64 +1,73 @@
 package de.battleship.dao;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.testng.annotations.AfterTest;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class DAOTest {
+    static int[][] testFeld = {{1, 0, 0, 0, 0, 1, 1, 0, 0, 0},
+                               {1, 0, 1, 0, 0, 0, 0, 0, 1, 0},
+                               {1, 0, 1, 0, 1, 1, 1, 0, 1, 0},
+                               {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                               {0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
+                               {0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+                               {0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
+                               {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+                               {0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
+                               {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+
     static BackendDAO backendDAO = new BackendDAOImp();
+
+    @BeforeEach
+    public void vorJedemTests() { backendDAO.setFeld(testFeld); }
 
     @Test
     void testValide() {
-        int[][] testFeld = {{1, 0, 0, 0, 0, 1, 1, 0, 0, 0},
-                            {1, 0, 1, 0, 0, 0, 0, 0, 1, 0},
-                            {1, 0, 1, 0, 1, 1, 1, 0, 1, 0},
-                            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                            {0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
-                            {0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
-                            {0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
-                            {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
-                            {0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
-                            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
-
         boolean check = backendDAO.istValide(testFeld,1,2,3,4);
         assertTrue(check);
     }
 
     @Test
-    @DisplayName("Test 'Getroffen' should work")
     void testGetroffen()
     {
-        boolean checkHit = backendDAOImp.istGetroffen(1,  8);
+        boolean checkHit = backendDAO.istGetroffen(0,  0);
         assertTrue(checkHit);
-        boolean checkHitFalse = backendDAOImp.istGetroffen(5,8);
-        assertFalse(backendDAOImp.schonMalGeschossen() == true);
+        boolean checkHitFalse = backendDAO.istGetroffen(1,1);
+        assertFalse(checkHitFalse);
+        backendDAO.setFeld(testFeld);
     }
 
     @Test
-    @DisplayName("Test 'schon mal getroffen' should Work")
     void testMalGeschossen()
     {
-        boolean checkAlreadyHit = backendDAOImp.schonMalGeschossen() == true;
+        backendDAO.istGetroffen(0,0);
+        backendDAO.istGetroffen(0,0);
+        assertTrue(backendDAO.schonMalGeschossen());
     }
 
     @Test
-    @DisplayName("Test 'Versenkt' should work")
     void testVersenkt()
     {
-    boolean checkDown = backendDAOImp.istVersenkt(0, 1);
-    assertFalse(checkDown);
-    boolean checkDown1 = backendDAOImp.istGetroffen(1 , 1);
-    assertTrue(checkDown1);
-    }
+        int[][] schiff = new int[][]{new int[]{0, 0}, new int[]{1, 0}, new int[]{2, 0}, new int[]{3, 0},};
 
-    @Test
-    @DisplayName("Test 'Beendet' should work")
-    void testBeendet()
-    {
-        int [][] Schiff;
-        boolean checkFinished = backendDAOImp.spielBeendet();
+        for (int[] schiffsTeil : schiff){
+            assertTrue(backendDAO.istGetroffen(schiffsTeil[0], schiffsTeil[1]));
+        }
+
+        assertNotNull(backendDAO.getLetztesVersenktesSchiff());
+
+        boolean checkDown = backendDAO.istVersenkt(3, 0);
+        assertTrue(checkDown);
+
     }
 }

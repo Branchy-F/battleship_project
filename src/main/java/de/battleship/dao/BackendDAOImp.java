@@ -15,9 +15,9 @@ public class BackendDAOImp implements BackendDAO{
 
     @Override
     public boolean istValide(int[][] feld, int anzahlBattleship, int anzahlCruiser, int anzahlDestroyer, int anzahlSubmarine) {
-        Validator validator = new Validator(anzahlBattleship,anzahlCruiser,anzahlDestroyer,anzahlSubmarine);
+        Validator validator = new Validator(anzahlBattleship, anzahlCruiser, anzahlDestroyer, anzahlSubmarine);
         if (validator.fieldValidator(feld)){
-            this.feld = Arrays.stream(feld).map(int[]::clone).toArray(int[][]::new);
+            setFeld(feld);
             this.schiffe = validator.getSchiffe();
             return true;
         }
@@ -71,4 +71,13 @@ public class BackendDAOImp implements BackendDAO{
 
     @Override //noch nicht testen
     public List<int[]> getLetztesVersenktesSchiff() { return letztesVersenktesSchiff; }
+
+    @Override
+    public int[][] getFeld() {
+        return feld;
+    }
+    @Override
+    public void setFeld(int[][] feld) {
+        this.feld = Arrays.stream(feld).map(int[]::clone).toArray(int[][]::new);
+    }
 }
