@@ -1,5 +1,4 @@
-package bs.gui;
-import javafx.scene.Parent;
+package de.battleship.gui;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 

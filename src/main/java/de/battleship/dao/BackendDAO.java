@@ -1,4 +1,4 @@
-package bs.dao;
+package de.battleship.dao;
 
 import java.util.List;
 

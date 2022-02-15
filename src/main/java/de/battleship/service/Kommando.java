@@ -1,4 +1,4 @@
-package bs.service;
+package de.battleship.service;
 
 import java.io.Serializable;
 

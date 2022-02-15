@@ -1,7 +1,7 @@
-package bs.gui;
+package de.battleship.gui;
 
 
-import bs.service.SpielFeldServiceImp;
+import de.battleship.service.SpielFeldServiceImp;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

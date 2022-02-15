@@ -1,5 +1,6 @@
-package bs.dao;
+package de.battleship.dao;
 
+import de.battleship.dao.BackendDAOImp;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
