@@ -82,7 +82,7 @@ public class BSSocket {
             }
             in.close();
         } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 
