@@ -25,17 +25,13 @@ jlink {
 }
 
 dependencies {
-//    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.7.2'
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.7.2'
     testRuntimeOnly group:  'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.7.2'
 }
 
 
 test {
     useJUnitPlatform()
-//    testLogging {
-//        showStandardStreams = true
-//    }
 }
-
 // Ausführen der JavaFX-App:
 // gradlew run

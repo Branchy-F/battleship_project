@@ -1,12 +1,14 @@
 package bs.service;
 
+import bs.dao.Antwort;
 import bs.dao.BackendDAOImp;
 
+import java.lang.reflect.AnnotatedType;
 import java.util.Arrays;
 
 public class SpielFeldServiceImp implements SpielFeldService {
     private static SpielFeldServiceImp instance;
-    private BackendDAOImp backendDAOImp;
+    private final BackendDAOImp backendDAOImp;
 
     public static SpielFeldServiceImp getInstance(){
         if (instance == null) { instance = new SpielFeldServiceImp(); }
@@ -17,24 +19,12 @@ public class SpielFeldServiceImp implements SpielFeldService {
 
     @Override
     public boolean istValide(int[][] feld) {
-        int[][] tempFeld = Arrays.stream(feld)
-                .map(int[]::clone)
-                .toArray(int[][]::new);
-        return backendDAOImp.istValide(tempFeld);
+        return backendDAOImp.istValide(feld, 1,2,3,4);
     }
 
     @Override
-    public boolean istGetroffen(int[] koordinaten) {
+    public boolean istGetroffen(int x, int y) {
+//        Antwort antwort = backendDAOImp.istGetroffen(x, y);
         return false;
-    }
-
-    @Override
-    public int[] istVersenkt(int[] koordinaten) {
-        return null;
-    }
-
-    @Override
-    public int spielenWeiter() {
-        return 0;
     }
 }

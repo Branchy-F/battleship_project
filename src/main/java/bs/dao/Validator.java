@@ -11,6 +11,7 @@ public class Validator {
     private final int anzahlDestroyer;
     private final int anzahlSubmarine;
     private final int laengeBattleship = 4;
+    private List<List<int[]>> schiffe;
 
     public Validator(int anzahlBattleship, int anzahlCruiser, int anzahlDestroyer, int anzahlSubmarine) {
         this.anzahlBattleship = anzahlBattleship;
@@ -19,10 +20,14 @@ public class Validator {
         this.anzahlSubmarine = anzahlSubmarine;
     }
 
-    public boolean fieldValidator(int[][] field) {
+    public void setSchiffe(List<List<int[]>> schiffe) { this.schiffe = schiffe; }
+    public List<List<int[]>> getSchiffe() { return schiffe; }
+
+    public boolean fieldValidator(int[][] feld) {
+        int[][] field = Arrays.stream(feld).map(int[]::clone).toArray(int[][]::new);
+
         List<List<int[]>> ships = new ArrayList<>();
         List<int[]> found_ship;
-
         for (int i = 0; i < field.length; i++){
             for (int j = 0; j < field[i].length; j++){
                 if(field[i][j] == 1){
@@ -49,6 +54,8 @@ public class Validator {
                     battleship++; break;
             }
         }
+
+        setSchiffe(ships);
         return submarines == anzahlSubmarine && destroyers == anzahlDestroyer && cruisers == anzahlCruiser && battleship == anzahlBattleship;
     }
 
@@ -82,22 +89,22 @@ public class Validator {
 
         return ship;
     }
-    //previous_part: '0'-no found parts, '1'-left, '2'-up, '3'-right, '4'-down
-    //returns: '0'-ship hasn't other parts, '1'-right, '2'-down, '3'-left, '4'-up
+    //letzter Teil: '0'-keine Teile gefunden, '1'-links, '2'-oben, '3'-rechts, '4'-unten
+    //return: '0'- das Schiff hat keine weitere Teile, '1'-rechts, '2'-unten, '3'-links, '4'-oben
     public int findNextPart(int[][] field, int i, int j, int previous_part) {
         int[][] search_coordinates = new int[][]{{i + 1, j}, {i - 1, j}, {i, j + 1}, {i, j - 1}};
         int[][] forbidden_coordinates;
 
         switch (previous_part){
-            case 1: // has a part on the left side
-            case 3: // has a part on the right side
+            case 1: // Teil links
+            case 3: // Teil rechts
                 forbidden_coordinates = new int[][]{{i + 1, j + 1}, {i - 1, j - 1}, {i - 1, j + 1}, {i + 1, j - 1}, {i + 1, j}, {i - 1, j}};
                 break;
-            case 2: // has a part on top
-            case 4: // has a bottom part
+            case 2: // Teil oben
+            case 4: // Teil unten
                 forbidden_coordinates = new int[][]{{i + 1, j + 1}, {i - 1, j - 1}, {i - 1, j + 1}, {i + 1, j - 1}, {i, j + 1}, {i, j - 1}};
                 break;
-            default: // has no found parts
+            default: // keine Teile gefunden
                 forbidden_coordinates = new int[][]{{i + 1, j + 1}, {i - 1, j - 1}, {i - 1, j + 1}, {i + 1, j - 1}};
                 break;
         }
@@ -111,10 +118,10 @@ public class Validator {
         for (int[] c: search_coordinates) {
             try {
                 if (field[c[0]][c[1]] == 1) {
-                    if (c[1] > j) { return 1; }     // part right
-                    else if (c[0] > i) { return 2; } // part down
-                    else if (c[1] < j) { return 3; } // part left
-                    else if (c[0] < i) { return 4; } // part up
+                    if (c[1] > j) { return 1; }     // Teil rechts
+                    else if (c[0] > i) { return 2; } // Teil unten
+                    else if (c[1] < j) { return 3; } // Teil links
+                    else if (c[0] < i) { return 4; } // Teil oben
                 }
             } catch (IndexOutOfBoundsException ignored){ }
         }

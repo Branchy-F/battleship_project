@@ -1,35 +1,56 @@
 package bs.dao;
 
+import java.util.List;
+
 public class Antwort {
     private boolean getroffen;
     private boolean versenkt = false;
-    private int[] koordinaten = null;
-    private boolean spielenWeiter = true;
-    private int gewinner = 0;
+    private List<int[]> koordinaten = null;
+    private boolean spielBeendet = false;
+    private boolean schonMalGeschossen = true;
 
-    //nicht getroffen
-    public Antwort(boolean getroffen) {
+
+    public boolean isGetroffen() {
+        return getroffen;
+    }
+
+    public void setGetroffen(boolean getroffen) {
         this.getroffen = getroffen;
     }
 
-    //getroffen und nicht versenkt
-    public Antwort(boolean getroffen, boolean versenkt) {
-        this.getroffen = getroffen;
+    public boolean isSpielBeendet() {
+        return spielBeendet;
+    }
+
+    public boolean isVersenkt() {
+        return versenkt;
+    }
+
+    public void setVersenkt(boolean versenkt) {
         this.versenkt = versenkt;
     }
 
-    //Letzte Antwort (Spiel ist zu Ende)
-    public Antwort(boolean getroffen, boolean versenkt, int[] koordinaten, boolean spielenWeiter, int gewinner) {
-        this.getroffen = getroffen;
-        this.versenkt = versenkt;
+    public List<int[]> getKoordinaten() {
+        return koordinaten;
+    }
+
+    public void setKoordinaten(List<int[]> koordinaten) {
         this.koordinaten = koordinaten;
-        this.spielenWeiter = spielenWeiter;
-        this.gewinner = gewinner;
     }
 
-    public boolean isGetroffen() {return getroffen; }
-    public boolean isVersenkt() { return versenkt; }
-    public int[] getKoordinaten() { return koordinaten; }
-    public boolean isSpielenWeiter() { return spielenWeiter; }
-    public int getGewinner() {return gewinner; }
+    public boolean SpielBeendet() {
+        return spielBeendet;
+    }
+
+    public void setSpielBeendet(boolean spielBeendet) {
+        this.spielBeendet = spielBeendet;
+    }
+
+    public boolean SchonMalGeschossen() {
+        return schonMalGeschossen;
+    }
+
+    public void setSchonMalGeschossen(boolean schonMalGeschossen) {
+        this.schonMalGeschossen = schonMalGeschossen;
+    }
 }
