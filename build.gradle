@@ -16,7 +16,7 @@ javafx {
     modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
-mainClassName = "de.battleship.gui.AppTest"
+mainClassName = "de.battleship.gui.BattleshipApp"
 jlink {
     options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
     launcher {

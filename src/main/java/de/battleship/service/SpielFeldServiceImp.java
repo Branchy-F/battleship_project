@@ -2,25 +2,25 @@ package de.battleship.service;
 
 import de.battleship.dao.BackendDAO;
 import de.battleship.dao.BackendDAOImp;
-import de.battleship.gui.AppTest;
+import de.battleship.gui.SchiffeEintragenController;
 
 import java.io.IOException;
 import java.util.Arrays;
 
 public class SpielFeldServiceImp implements SpielFeldService {
     private final BackendDAO backendDAO;
-    private AppTest app;
+    private SchiffeEintragenController app;
     private int[][] spielFeldGegner = new int[10][10];
     private int[][] meinSpielFeld = new int[10][10];
     BSSocket bs;
 
-    public SpielFeldServiceImp(AppTest app) {
+    public SpielFeldServiceImp(SchiffeEintragenController app) {
         backendDAO = new BackendDAOImp();
         this.app = app;
-        try {
-            bs = new BSSocket(this,"192.168.1.10", 22000, 22001);
-//            bs = new BSSocket(this, "192.168.1.11", 22001, 22000);
-        } catch (IOException e) { e.printStackTrace(); }
+//        try {
+//            bs = new BSSocket(this,"192.168.1.10", 22000, 22001);
+////            bs = new BSSocket(this, "192.168.1.11", 22001, 22000);
+//        } catch (IOException e) { e.printStackTrace(); }
     }
 
     @Override
