@@ -4,6 +4,7 @@ package de.battleship.gui;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -21,6 +22,7 @@ public class App extends Application {
         window = primaryStage;
         window.setTitle("BATTLESHIP");
         button = new Button("Spiel starten");
+
 
         button.setOnAction(e -> SpielFeld.display());
 
