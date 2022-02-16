@@ -1,16 +1,15 @@
 package de.battleship.gui;
 
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.stage.Stage;
+import javafx.event.ActionEvent;
 
 public class BattleshipController {
-    private Stage stage;
-    final Stage neuerEintrag = new Stage();
 
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
+    private BattleshipApp battleshipApp;
+    public void setApp(BattleshipApp battleshipApp) {
+        this.battleshipApp = battleshipApp;
     }
 
+    public void zweitesFensterOeffnen(ActionEvent actionEvent) {
+        battleshipApp.zweitesFensterOeffnen();
+    }
 }

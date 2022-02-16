@@ -5,9 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.io.IOException;
-import java.net.URL;
 
 public class BattleshipApp extends Application {
     private static Stage primaryStage;
@@ -16,18 +14,32 @@ public class BattleshipApp extends Application {
         launch(args);
     }
 
-    public static Stage getPrimaryStage() {
-        return primaryStage;
-    }
-
     @Override
     public void start(Stage primaryStage) throws IOException {
         BattleshipApp.primaryStage = primaryStage;
-        URL res = getClass().getResource("battleship.fxml");
-        Parent root = FXMLLoader.load(res);
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("battleship.fxml"));
+        Parent root = loader.load();
+        BattleshipController controller = loader.getController();
+        controller.setApp(this);
 
         primaryStage.setTitle("Battleship");
         primaryStage.setScene(new Scene(root, 790, 400));
+        primaryStage.setResizable(false);
+        primaryStage.show();
+    }
+
+    public void zweitesFensterOeffnen() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("schiffeEintragen.fxml"));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        primaryStage.setTitle("Schiffe eintragen");
+        primaryStage.setScene(new Scene(root, 400, 400));
         primaryStage.setResizable(false);
         primaryStage.show();
     }
