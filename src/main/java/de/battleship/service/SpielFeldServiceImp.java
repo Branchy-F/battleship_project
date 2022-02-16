@@ -17,10 +17,10 @@ public class SpielFeldServiceImp implements SpielFeldService {
     public SpielFeldServiceImp(AppTest app) {
         backendDAO = new BackendDAOImp();
         this.app = app;
-        try {
-            bs = new BSSocket(this,"192.168.1.10", 22000, 22001);
-//            bs = new BSSocket(this, "192.168.1.11", 22001, 22000);
-        } catch (IOException e) { e.printStackTrace(); }
+//        try {
+//            bs = new BSSocket(this,"192.168.1.10", 22000, 22001);
+////            bs = new BSSocket(this, "192.168.1.11", 22001, 22000);
+//        } catch (IOException e) { e.printStackTrace(); }
     }
 
     @Override
