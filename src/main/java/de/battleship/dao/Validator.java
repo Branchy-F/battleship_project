@@ -35,6 +35,8 @@ public class Validator {
     public boolean fieldValidator(int[][] feld) {
         int[][] field = Arrays.stream(feld).map(int[]::clone).toArray(int[][]::new);
 
+        boolean extraPruefung = true;
+
         List<List<int[]>> ships = new ArrayList<>();
         List<int[]> found_ship;
         for (int i = 0; i < field.length; i++){
@@ -42,10 +44,10 @@ public class Validator {
                 if(field[i][j] == 1){
                     found_ship = findAllParts(i, j, field);
                     for(int[] ship: found_ship) {
-                        if (Arrays.equals(ship, new int[]{-1, -1})) return false;
+                        if (Arrays.equals(ship, new int[]{-1, -1})) {extraPruefung = false;}
                     }
                     if (!found_ship.isEmpty() && found_ship.size() <= laengeBattleship) ships.add(found_ship);
-                    else if (found_ship.size() > laengeBattleship) return false;
+                    else if (found_ship.size() > laengeBattleship) {extraPruefung = false;}
                 }
             }
         }
@@ -64,7 +66,12 @@ public class Validator {
             }
         }
 
-        setAnzahlSchiffe(battleship,cruisers,destroyers,submarines);
+        if (extraPruefung){
+            setAnzahlSchiffe(battleship,cruisers,destroyers,submarines);
+        } else {
+            setAnzahlSchiffe(-1,-1,-1,-1);
+        }
+
         setSchiffe(ships);
         return submarines == anzahlSubmarine && destroyers == anzahlDestroyer && cruisers == anzahlCruiser && battleship == anzahlBattleship;
     }

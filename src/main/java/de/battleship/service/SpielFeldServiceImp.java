@@ -31,15 +31,24 @@ public class SpielFeldServiceImp implements SpielFeldService {
             return true;
         } else {
             int[] anzahlSchiffe = backendDAO.getAnzahlSchiffe(app.getFeld(), 1,2,3,4);
-            StringBuilder stringBuilder = new StringBuilder("Tragen Sie");
-            if (anzahlSchiffe[0] != 1) { stringBuilder.append("\n 1 Schlachtschiff (4Kästchen)"); }
-            if (anzahlSchiffe[1] != 2) { stringBuilder.append(String.format("\n %d Kreuzer (3 Kästchen)", 2-anzahlSchiffe[1])); }
-            if (anzahlSchiffe[2] != 3) { stringBuilder.append(String.format("\n %d Zerstörer (2 Kästchen)", 3-anzahlSchiffe[2])); }
-            if (anzahlSchiffe[3] != 4) { stringBuilder.append(String.format("\n %d U-Boote", 4-anzahlSchiffe[3])); }
-            stringBuilder.append(" ein.");
 
-            app.setMeldung(stringBuilder.toString());
-            return false;
+            if (anzahlSchiffe[0] == -1){ //Warnung von Validator
+                app.setMeldung("Ein Schiff wurde\nfalsch eingetragen!");
+                return false;
+            }
+            else{
+                StringBuilder stringBuilder = new StringBuilder("Schiffe eintragen:");
+                String[] schiffe = {"U-Boote", "Zerstörer", "Kreuzer", "Schlachtschiff"};
+                for(int i = 0, j=4; i <= 3; i++, j--){
+                    if (anzahlSchiffe[i] < i+1) {
+                        stringBuilder.append(String.format("\n %d %s (%d Kästchen)", (i+1)-anzahlSchiffe[i], schiffe[j-1], j));
+                    } else if (anzahlSchiffe[i] > i+1) {
+                        stringBuilder.append(String.format("\n Zu viele %d-Kästchen-Schiffe!", j));
+                    }
+                }
+                app.setMeldung(stringBuilder.toString());
+                return false;
+            }
         }
     }
 

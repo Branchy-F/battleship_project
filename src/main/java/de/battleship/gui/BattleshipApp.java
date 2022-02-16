@@ -36,7 +36,7 @@ public class BattleshipApp extends Application {
         controller.setApp(this);
 
         primaryStage.setTitle("Schiffe eintragen");
-        primaryStage.setScene(new Scene(root, 600, 400));
+        primaryStage.setScene(new Scene(root, 650, 400));
         primaryStage.setResizable(false);
         primaryStage.show();
     }

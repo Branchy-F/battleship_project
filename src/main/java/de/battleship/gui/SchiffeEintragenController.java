@@ -33,7 +33,6 @@ public class SchiffeEintragenController implements Initializable {
     }
 
     private void spielFeldErstellen() {
-        lMeldung.setText("Zweites Fenster");
         spielFeldService = new SpielFeldServiceImp(this);
 
         for (int j = 0; j < 10; j++){
@@ -51,11 +50,12 @@ public class SchiffeEintragenController implements Initializable {
             vbFeldEintragen.getChildren().add(zeile);
         }
 
-        setMeldung("Tragen Sie"+
+        lMeldung.setMinWidth(260);
+        setMeldung("Schiffe eintragen:"+
                 "\n 1 Schlachtschiff (4Kästchen)"+
                 "\n 2 Kreuzer (3 Kästchen)"+
                 "\n 3 Zerstörer (2 Kästchen)"+
-                "\n 4 U-Boote ein.");
+                "\n 4 U-Boote (1 Kästchen)");
     }
 
 
