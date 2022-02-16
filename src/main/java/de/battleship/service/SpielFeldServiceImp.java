@@ -2,19 +2,19 @@ package de.battleship.service;
 
 import de.battleship.dao.BackendDAO;
 import de.battleship.dao.BackendDAOImp;
-import de.battleship.gui.BattleshipController;
+import de.battleship.gui.SchiffeEintragenController;
 
 import java.io.IOException;
 import java.util.Arrays;
 
 public class SpielFeldServiceImp implements SpielFeldService {
     private final BackendDAO backendDAO;
-    private BattleshipController app;
+    private SchiffeEintragenController app;
     private int[][] spielFeldGegner = new int[10][10];
     private int[][] meinSpielFeld = new int[10][10];
     BSSocket bs;
 
-    public SpielFeldServiceImp(BattleshipController app) {
+    public SpielFeldServiceImp(SchiffeEintragenController app) {
         backendDAO = new BackendDAOImp();
         this.app = app;
 //        try {

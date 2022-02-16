@@ -24,18 +24,31 @@ public class BattleshipApp extends Application {
         controller.setApp(this);
 
         primaryStage.setTitle("Battleship");
-        primaryStage.setScene(new Scene(root, 790, 400));
+        primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
         primaryStage.show();
     }
 
-    public void zweitesFensterOeffnen() {
+    public void zweitesFensterOeffnen() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("schiffeEintragen.fxml"));
-        Parent root = null;
-        try {root = loader.load(); } catch (IOException e) { e.printStackTrace(); }
+        Parent root = loader.load();
+        SchiffeEintragenController controller = loader.getController();
+        controller.setApp(this);
 
         primaryStage.setTitle("Schiffe eintragen");
-        primaryStage.setScene(new Scene(root));
+        primaryStage.setScene(new Scene(root, 600, 400));
+        primaryStage.setResizable(false);
+        primaryStage.show();
+    }
+
+    public void spielFensterOeffnen() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("spiel.fxml"));
+        Parent root = loader.load();
+        SpielController controller = loader.getController();
+        controller.setApp(this);
+
+        primaryStage.setTitle("Spiel");
+        primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.setResizable(false);
         primaryStage.show();
     }
