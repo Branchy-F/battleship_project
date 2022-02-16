@@ -4,38 +4,48 @@ import de.battleship.dao.BackendDAO;
 import de.battleship.dao.BackendDAOImp;
 import de.battleship.gui.AppTest;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 public class SpielFeldServiceImp implements SpielFeldService {
-    private static SpielFeldServiceImp instance;
-    private BackendDAO backendDAO;
+    private final BackendDAO backendDAO;
     private AppTest app;
     private int[][] spielFeldGegner = new int[10][10];
     private int[][] meinSpielFeld = new int[10][10];
+    BSSocket bs;
 
     public SpielFeldServiceImp(AppTest app) {
         backendDAO = new BackendDAOImp();
         this.app = app;
+        try {
+            bs = new BSSocket(this,"192.168.1.10", 22000, 22001);
+//            bs = new BSSocket(this, "192.168.1.11", 22001, 22000);
+        } catch (IOException e) { e.printStackTrace(); }
     }
 
+    @Override
     //'x' und 'y' von der GUI erhalten
-    public void anfrageAbschicken(int x, int y){
+    public void zugAbschicken(int x, int y){
         Zug zug = new Zug(x, y);
-        //??? Anfrage abschicken
-        Antwort antwort = new Antwort(); //??? Antwort bekommen
+        try {
+            bs.sendeZug(zug);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    @Override
+    public void aufAntwortReagieren(Antwort antwort){
         //app.setFeldGegner(feldAendern(zug, antwort, spielFeldGegner));
         //app.setMeldung(meldungFuerGuiErstellen(antwort));
     }
 
-    public void anfrageBekommen(){
-        Zug zug = new Zug(0,0); //??? Anfrage bekommen
+    @Override
+    public Antwort aufZugReagieren(Zug zug){
         Antwort antwort = antwortErstellen(zug);
-        //??? Antwort abschicken
-
-
         //app.setMeinFeld(feldAendern(zug, antwort, meinSpielFeld));
         //app.setMeldung(meldungFuerGuiErstellen(antwort));
+        return antwort;
     }
 
     @Override
