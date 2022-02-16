@@ -15,13 +15,17 @@ import java.util.ResourceBundle;
 
 public class SpielController implements Initializable {
     private BattleshipApp battleshipApp;
+    private SpielFeldService spielFeldService;
+
+    public void setApp(BattleshipApp battleshipApp) {
+        this.battleshipApp = battleshipApp;
+    }
+    public void setSpielFeldService(SpielFeldService spielFeldService) {
+        this.spielFeldService = spielFeldService;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
-    public void setApp(BattleshipApp battleshipApp) {
-        this.battleshipApp = battleshipApp;
-    }
-
 }

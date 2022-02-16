@@ -32,8 +32,11 @@ public class SchiffeEintragenController implements Initializable {
         this.battleshipApp = battleshipApp;
     }
 
+    public void setSpielFeldService(SpielFeldService spielFeldService) {
+        this.spielFeldService = spielFeldService;
+    }
+
     private void spielFeldErstellen() {
-        spielFeldService = new SpielFeldServiceImp(this);
 
         for (int j = 0; j < 10; j++){
             HBox zeile = new HBox();

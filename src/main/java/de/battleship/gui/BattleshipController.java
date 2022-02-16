@@ -1,5 +1,6 @@
 package de.battleship.gui;
 
+import de.battleship.service.SpielFeldService;
 import javafx.event.ActionEvent;
 
 import java.io.IOException;
