@@ -20,7 +20,12 @@ public class AppTest extends Application {
     static Stage primaryStage;
     private SpielFeldService spielFeldService;
     Label lAusgabe;
-    Label lCheck;
+
+    public void setlMeldung(String meldung) {
+        this.lMeldung.setText(meldung);
+    }
+
+    Label lMeldung;
     private int[][] feld = new int[10][10];
     public static void main(String[] args) {
         launch(args);
@@ -36,16 +41,13 @@ public class AppTest extends Application {
         bAusgeben.setOnAction(e -> feldAusgeben());
 
         Button bCheckFeld = new Button("Check");
-        bCheckFeld.setOnAction(e -> lCheck.setText(String.valueOf(spielFeldService.istValide(feld))));
-        lCheck = new Label("");
+        bCheckFeld.setOnAction(e -> lMeldung.setText(String.valueOf(spielFeldService.istValide(feld))));
+        lMeldung = new Label("");
 
-
-
-        HBox hBoxCheck = new HBox(bCheckFeld, lCheck);
+        HBox hBoxCheck = new HBox(bCheckFeld, lMeldung);
         hBoxCheck.setSpacing(10);
         hBoxCheck.setPadding(new Insets(10));
         hBoxCheck.setAlignment(Pos.CENTER_LEFT);
-
 
         VBox vBox = new VBox(hBoxCheck, bAusgeben);
         for (int j = 0; j < 10; j++){
@@ -70,9 +72,7 @@ public class AppTest extends Application {
         primaryStage.setTitle("Schiffe");
         primaryStage.setScene(scene);
         primaryStage.show();
-
     }
-
 
     private void teilEintragen(int x, int y, Button b){
         if (feld[x][y] == 0) {

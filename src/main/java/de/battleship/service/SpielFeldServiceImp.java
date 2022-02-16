@@ -18,8 +18,8 @@ public class SpielFeldServiceImp implements SpielFeldService {
         backendDAO = new BackendDAOImp();
         this.app = app;
         try {
-            bs = new BSSocket(this,"192.168.1.10", 22000, 22001);
-//            bs = new BSSocket(this, "192.168.1.11", 22001, 22000);
+            bs = new BSSocket(this,"localhost", 22000, 22001);
+//            bs = new BSSocket(this, "localhost", 22001, 22000);
         } catch (IOException e) { e.printStackTrace(); }
     }
 
@@ -46,6 +46,10 @@ public class SpielFeldServiceImp implements SpielFeldService {
     public void aufAntwortReagieren(Antwort antwort){
         //app.setFeldGegner(feldAendern(zug, antwort, spielFeldGegner));
         //app.setMeldung(meldungFuerGuiErstellen(antwort));
+    }
+    @Override
+    public void setMeldungVerbindung(String meldung){
+        app.setlMeldung(meldung);
     }
 
     @Override

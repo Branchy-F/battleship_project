@@ -6,6 +6,8 @@ public interface SpielFeldService {
 
     void aufAntwortReagieren(Antwort antwort);
 
+    void setMeldungVerbindung(String meldung);
+
     Antwort aufZugReagieren(Zug zug);
     boolean istValide (int[][] feld);
     Antwort antwortErstellen(Zug zug);
