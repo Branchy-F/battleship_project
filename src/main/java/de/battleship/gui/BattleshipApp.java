@@ -32,14 +32,10 @@ public class BattleshipApp extends Application {
     public void zweitesFensterOeffnen() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("schiffeEintragen.fxml"));
         Parent root = null;
-        try {
-            root = loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        try {root = loader.load(); } catch (IOException e) { e.printStackTrace(); }
 
         primaryStage.setTitle("Schiffe eintragen");
-        primaryStage.setScene(new Scene(root, 400, 400));
+        primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
         primaryStage.show();
     }
