@@ -10,9 +10,8 @@ import java.awt.*;
 public class SpielFeld {
 
     public static void display()  {
-        Stage window = new Stage();
-        window.setTitle("BATTLESHIP");
-        window.setMinWidth(300);
+        App.window.setTitle("BATTLESHIP");
+        App.window.setMinWidth(300);
         Label label = new Label();
         label.setText("");
 
@@ -21,8 +20,8 @@ public class SpielFeld {
         layout.getChildren().addAll();
         layout.setAlignment(Pos.CENTER);
         Scene scene = new Scene(layout);
-        window.setScene(scene);
-        window.showAndWait();
+        App.window.setScene(scene);
+        App.window.show();
     }
 
 }

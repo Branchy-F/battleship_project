@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 public class App extends Application {
 
-    Stage window;
+    static Stage window;
     Button button;
 
     public static void main(String[] args) {
@@ -20,7 +20,7 @@ public class App extends Application {
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
         window.setTitle("BATTLESHIP");
-        button = new Button("Lets go!!");
+        button = new Button("Spiel starten");
 
         button.setOnAction(e -> SpielFeld.display());
 
@@ -30,6 +30,5 @@ public class App extends Application {
 
         window.setScene(scene);
         window.show();
-
     }
 }
