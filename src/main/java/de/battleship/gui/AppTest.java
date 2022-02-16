@@ -20,7 +20,6 @@ public class AppTest extends Application {
     static Stage primaryStage;
     private SpielFeldService spielFeldService;
     Label lAusgabe;
-    Label lCheck;
     private int[][] feld = new int[10][10];
     public static void main(String[] args) {
         launch(args);
@@ -29,25 +28,9 @@ public class AppTest extends Application {
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-
         spielFeldService = new SpielFeldServiceImp(this);
 
-        Button bAusgeben = new Button("Ausgeben");
-        bAusgeben.setOnAction(e -> feldAusgeben());
-
-        Button bCheckFeld = new Button("Check");
-        bCheckFeld.setOnAction(e -> lCheck.setText(String.valueOf(spielFeldService.istValide(feld))));
-        lCheck = new Label("");
-
-
-
-        HBox hBoxCheck = new HBox(bCheckFeld, lCheck);
-        hBoxCheck.setSpacing(10);
-        hBoxCheck.setPadding(new Insets(10));
-        hBoxCheck.setAlignment(Pos.CENTER_LEFT);
-
-
-        VBox vBox = new VBox(hBoxCheck, bAusgeben);
+        VBox vBox = new VBox();
         for (int j = 0; j < 10; j++){
             HBox zeile = new HBox();
             for (int i = 0; i < 10; i++){
@@ -63,14 +46,25 @@ public class AppTest extends Application {
             vBox.getChildren().add(zeile);
         }
 
-        lAusgabe = new Label("");
-        vBox.getChildren().add(lAusgabe);
+        lAusgabe = new Label("Tragen Sie"+
+                "\n 1 Schlachtschiff (4Kästchen)"+
+                "\n 2 Kreuzer (3 Kästchen)"+
+                "\n 3 Zerstörer (2 Kästchen)"+
+                "\n 4 U-Boote ein.");
 
-        Scene scene = new Scene(vBox, 300, 570);
+        HBox hbAusgabe = new HBox(lAusgabe);
+        hbAusgabe.setSpacing(10);
+        hbAusgabe.setPadding(new Insets(10));
+        hbAusgabe.setAlignment(Pos.CENTER_LEFT);
+
+        vBox.getChildren().add(hbAusgabe);
+
+        vBox.setPadding(new Insets(10));
+
+        Scene scene = new Scene(vBox, 320, 500);
         primaryStage.setTitle("Schiffe");
         primaryStage.setScene(scene);
         primaryStage.show();
-
     }
 
 
@@ -83,6 +77,7 @@ public class AppTest extends Application {
             feld[x][y] = 0;
             b.setText("");
         }
+        spielFeldService.schiffeEintragen();
     }
     private void feldAusgeben() {
         StringBuilder stringBuilder = new StringBuilder();
@@ -91,5 +86,17 @@ public class AppTest extends Application {
             stringBuilder.append(s).append("\n");
         }
         lAusgabe.setText(stringBuilder.toString());
+    }
+
+    public void setMeldung(String meldung){
+        lAusgabe.setText(meldung);
+    }
+
+    public int[][] getFeld() {
+        return feld;
+    }
+
+    public void setFeld(int[][] feld) {
+        this.feld = feld;
     }
 }

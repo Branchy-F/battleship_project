@@ -24,6 +24,26 @@ public class SpielFeldServiceImp implements SpielFeldService {
     }
 
     @Override
+    public boolean schiffeEintragen() {
+        if (backendDAO.istValide(app.getFeld(),1,2,3,4)){
+            app.setMeldung("Alle Schiffe wurden richtig eingetragen!");
+            meinSpielFeld = Arrays.stream(app.getFeld()).map(int[]::clone).toArray(int[][]::new);
+            return true;
+        } else {
+            int[] anzahlSchiffe = backendDAO.getAnzahlSchiffe(app.getFeld(), 1,2,3,4);
+            StringBuilder stringBuilder = new StringBuilder("Tragen Sie");
+            if (anzahlSchiffe[0] != 1) { stringBuilder.append("\n 1 Schlachtschiff (4Kästchen)"); }
+            if (anzahlSchiffe[1] != 2) { stringBuilder.append(String.format("\n %d Kreuzer (3 Kästchen)", 2-anzahlSchiffe[1])); }
+            if (anzahlSchiffe[2] != 3) { stringBuilder.append(String.format("\n %d Zerstörer (2 Kästchen)", 3-anzahlSchiffe[2])); }
+            if (anzahlSchiffe[3] != 4) { stringBuilder.append(String.format("\n %d U-Boote", 4-anzahlSchiffe[3])); }
+            stringBuilder.append(" ein.");
+
+            app.setMeldung(stringBuilder.toString());
+            return false;
+        }
+    }
+
+    @Override
     //'x' und 'y' von der GUI erhalten
     public void zugAbschicken(int x, int y){
         Zug zug = new Zug(x, y);
@@ -46,15 +66,6 @@ public class SpielFeldServiceImp implements SpielFeldService {
         //app.setMeinFeld(feldAendern(zug, antwort, meinSpielFeld));
         //app.setMeldung(meldungFuerGuiErstellen(antwort));
         return antwort;
-    }
-
-    @Override
-    public boolean istValide(int[][] feld) {
-        if(backendDAO.istValide(feld, 1,2,3,4)){
-            meinSpielFeld = Arrays.stream(feld).map(int[]::clone).toArray(int[][]::new);
-            return true;
-        }
-        return false;
     }
 
     @Override
