@@ -31,15 +31,16 @@ public class SpielFeldServiceImp implements SpielFeldService {
         } catch (IOException e) { e.printStackTrace(); }
     }
 
-    @Override
+    @Override //testen
     //'x' und 'y' von der GUI erhalten
-    public void zugAbschicken(int x, int y){
+    public boolean zugAbschicken(int x, int y){
         Zug zug = new Zug(x, y);
         try {
             bs.sendeZug(zug);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     @Override
@@ -69,7 +70,7 @@ public class SpielFeldServiceImp implements SpielFeldService {
         return false;
     }
 
-    @Override
+    @Override // testen
     public Antwort antwortErstellen(Zug zug){
         int x = zug.getX();
         int y = zug.getY();
@@ -86,7 +87,7 @@ public class SpielFeldServiceImp implements SpielFeldService {
         return antwort;
     }
 
-    @Override
+    @Override //Nicht ändern
     //'0'-leer, '1'-Schiff, '5' - daneben geschossen, '8'-getroffen, '9'-versenkt
     public int[][] feldAendern(Zug zug, Antwort antwort, int[][] feld){
         int x = zug.getX();
@@ -103,7 +104,7 @@ public class SpielFeldServiceImp implements SpielFeldService {
         return feld;
     }
 
-    @Override
+    @Override // nicht testen
     public String meldungFuerGuiErstellen(Antwort antwort){
         String meldung = "";
         if (antwort.isGetroffen()) {
