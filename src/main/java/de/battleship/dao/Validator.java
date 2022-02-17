@@ -12,6 +12,7 @@ public class Validator {
     private final int anzahlSubmarine;
     private final int laengeBattleship = 4;
     private List<List<int[]>> schiffe;
+    private int[] anzahlSchiffe = new int[4];
 
     public Validator(int anzahlBattleship, int anzahlCruiser, int anzahlDestroyer, int anzahlSubmarine) {
         this.anzahlBattleship = anzahlBattleship;
@@ -22,6 +23,14 @@ public class Validator {
 
     public void setSchiffe(List<List<int[]>> schiffe) { this.schiffe = schiffe; }
     public List<List<int[]>> getSchiffe() { return schiffe; }
+
+    public int[] getAnzahlSchiffe() { return anzahlSchiffe; }
+    public void setAnzahlSchiffe(int anzahlBattleship, int anzahlCruiser, int anzahlDestroyer, int anzahlSubmarine) {
+        this.anzahlSchiffe[0] = anzahlBattleship;
+        this.anzahlSchiffe[1] = anzahlCruiser;
+        this.anzahlSchiffe[2] = anzahlDestroyer;
+        this.anzahlSchiffe[3] = anzahlSubmarine;
+    }
 
     public boolean fieldValidator(int[][] feld) {
         int[][] field = Arrays.stream(feld).map(int[]::clone).toArray(int[][]::new);
@@ -55,6 +64,7 @@ public class Validator {
             }
         }
 
+        setAnzahlSchiffe(battleship,cruisers,destroyers,submarines);
         setSchiffe(ships);
         return submarines == anzahlSubmarine && destroyers == anzahlDestroyer && cruisers == anzahlCruiser && battleship == anzahlBattleship;
     }

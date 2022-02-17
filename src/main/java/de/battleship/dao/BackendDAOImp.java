@@ -2,7 +2,6 @@ package de.battleship.dao;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class BackendDAOImp implements BackendDAO{
     private int[][] feld;
@@ -19,6 +18,14 @@ public class BackendDAOImp implements BackendDAO{
             return true;
         }
         else { return false; }
+    }
+
+    @Override
+    public int[] getAnzahlSchiffe(int[][] feld, int anzahlBattleship, int anzahlCruiser, int anzahlDestroyer, int anzahlSubmarine){
+        Validator validator = new Validator(anzahlBattleship, anzahlCruiser, anzahlDestroyer, anzahlSubmarine);
+        validator.fieldValidator(feld);
+
+        return validator.getAnzahlSchiffe();
     }
 
     @Override

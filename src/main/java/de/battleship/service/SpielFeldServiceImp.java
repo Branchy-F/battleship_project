@@ -2,19 +2,19 @@ package de.battleship.service;
 
 import de.battleship.dao.BackendDAO;
 import de.battleship.dao.BackendDAOImp;
-import de.battleship.gui.AppTest;
+import de.battleship.gui.SchiffeEintragenController;
 
 import java.io.IOException;
 import java.util.Arrays;
 
 public class SpielFeldServiceImp implements SpielFeldService {
     private final BackendDAO backendDAO;
-    private AppTest app;
+    private SchiffeEintragenController app;
     private int[][] spielFeldGegner = new int[10][10];
     private int[][] meinSpielFeld = new int[10][10];
     BSSocket bs;
 
-    public SpielFeldServiceImp(AppTest app) {
+    public SpielFeldServiceImp(SchiffeEintragenController app) {
         backendDAO = new BackendDAOImp();
         this.app = app;
         try {
@@ -26,9 +26,33 @@ public class SpielFeldServiceImp implements SpielFeldService {
     public SpielFeldServiceImp() { //für Testzwecke
         backendDAO = new BackendDAOImp();
         try {
-            bs = new BSSocket(this,"192.168.1.10", 22000, 22001);
-//            bs = new BSSocket(this, "192.168.1.11", 22001, 22000);
+            bs = new BSSocket(this,"localhost", 22000, 22001);
+//            bs = new BSSocket(this, "localhost", 22001, 22000);
         } catch (IOException e) { e.printStackTrace(); }
+//        try {
+//            bs = new BSSocket(this,"192.168.1.10", 22000, 22001);
+////            bs = new BSSocket(this, "192.168.1.11", 22001, 22000);
+//        } catch (IOException e) { e.printStackTrace(); }
+    }
+
+    @Override
+    public boolean schiffeEintragen() {
+        if (backendDAO.istValide(app.getFeld(),1,2,3,4)){
+            app.setMeldung("Alle Schiffe wurden richtig eingetragen!");
+            meinSpielFeld = Arrays.stream(app.getFeld()).map(int[]::clone).toArray(int[][]::new);
+            return true;
+        } else {
+            int[] anzahlSchiffe = backendDAO.getAnzahlSchiffe(app.getFeld(), 1,2,3,4);
+            StringBuilder stringBuilder = new StringBuilder("Tragen Sie");
+            if (anzahlSchiffe[0] != 1) { stringBuilder.append("\n 1 Schlachtschiff (4Kästchen)"); }
+            if (anzahlSchiffe[1] != 2) { stringBuilder.append(String.format("\n %d Kreuzer (3 Kästchen)", 2-anzahlSchiffe[1])); }
+            if (anzahlSchiffe[2] != 3) { stringBuilder.append(String.format("\n %d Zerstörer (2 Kästchen)", 3-anzahlSchiffe[2])); }
+            if (anzahlSchiffe[3] != 4) { stringBuilder.append(String.format("\n %d U-Boote", 4-anzahlSchiffe[3])); }
+            stringBuilder.append(" ein.");
+
+            app.setMeldung(stringBuilder.toString());
+            return false;
+        }
     }
 
     @Override //testen
@@ -104,7 +128,7 @@ public class SpielFeldServiceImp implements SpielFeldService {
         return feld;
     }
 
-    @Override // nicht testen
+    @Override
     public String meldungFuerGuiErstellen(Antwort antwort){
         String meldung = "";
         if (antwort.isGetroffen()) {

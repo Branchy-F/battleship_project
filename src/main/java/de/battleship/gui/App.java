@@ -3,10 +3,15 @@ package de.battleship.gui;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class App extends Application {
 
+    static Stage window;
+    Button button;
 
     public static void main(String[] args) {
         launch(args);
@@ -14,14 +19,18 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("BATTLESHIP");
+        window = primaryStage;
+        window.setTitle("BATTLESHIP");
+        button = new Button("Spiel starten");
 
-        PaneOrganizer organizer = new PaneOrganizer();
-        Scene scene = new Scene(organizer.getRoot());
 
+        button.setOnAction(e -> SpielFeld.display());
 
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        StackPane layout = new StackPane();
+        layout.getChildren().add(button);
+        Scene scene = new Scene(layout, 300, 250);
 
+        window.setScene(scene);
+        window.show();
     }
 }
