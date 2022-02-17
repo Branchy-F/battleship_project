@@ -56,6 +56,7 @@ public class BattleshipApp extends Application {
         spielController = loader.getController();
         spielController.setApp(this);
         spielController.setSpielFeldService(spielFeldService);
+        spielController.setMeinFeld(schiffeEintragenController.getFeld());
 
         primaryStage.setTitle("Spiel");
         primaryStage.setScene(new Scene(root, 670, 430));

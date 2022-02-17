@@ -49,8 +49,6 @@ public class SpielController implements Initializable {
             }
             vbGegnerFeld.getChildren().add(zeile);
         }
-
-        setMeinFeld(spielFeldService.getMeinSpielFeld());
     }
 
     public void setlSpielmeldung(String meldung) { this.lSpielmeldung.setText(meldung); }
