@@ -94,7 +94,6 @@ public class BSSocket {
     }
 
     public void sendeZug(Zug zug) throws IOException {
-        spielFeldService.setMeldungVerbindung("SENDE ZUG");
         out.writeObject(zug);
     }
 }

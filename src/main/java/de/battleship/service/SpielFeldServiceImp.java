@@ -72,10 +72,6 @@ public class SpielFeldServiceImp implements SpielFeldService {
         //app.setFeldGegner(feldAendern(zug, antwort, spielFeldGegner));
         //app.setMeldung(meldungFuerGuiErstellen(antwort));
     }
-    @Override
-    public void setMeldungVerbindung(String meldung){
-        app.setlMeldung(meldung);
-    }
 
     @Override
     public Antwort aufZugReagieren(Zug zug){
