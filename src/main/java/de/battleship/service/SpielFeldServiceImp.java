@@ -51,16 +51,16 @@ public class SpielFeldServiceImp implements SpielFeldService {
         }
     }
 
-    @Override
+    @Override //testen
     //'x' und 'y' von der GUI erhalten
-    public void zugAbschicken(int x, int y){
-        app.setSpielmeldung("Zug abgeschickt");
+    public boolean zugAbschicken(int x, int y){
         Zug zug = new Zug(x, y);
         try {
             bs.sendeZug(zug);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     @Override
