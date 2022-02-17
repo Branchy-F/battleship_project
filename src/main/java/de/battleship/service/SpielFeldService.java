@@ -7,6 +7,7 @@ public interface SpielFeldService {
     Antwort antwortErstellen(Zug zug);
     int[][] feldAendern(Zug zug, Antwort antwort, int[][] feld);
     String meldungFuerGuiErstellen(Antwort antwort);
+    void verbindungErstellen();
     boolean schiffeEintragen();
     int[][] getMeinSpielFeld();
     boolean istValide(int[][] feld);

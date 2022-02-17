@@ -1,5 +1,7 @@
 package de.battleship.service;
 
+import javafx.application.Platform;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -8,14 +10,18 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class BSSocket {
+    private final String host;
+    private final int portGegner;
     private ObjectOutputStream out;
     private boolean aktiv = false;
     private SpielFeldService spielFeldService;
 
     public BSSocket(SpielFeldService spielFeldService, String host, int port, int portGegner) throws IOException {
         this.spielFeldService = spielFeldService;
+        this.host = host;
+        this.portGegner = portGegner;
         createSocket(port);
-        verbindeMitGegner(host, portGegner);
+
     }
 
     public boolean isConnected() {
@@ -31,7 +37,7 @@ public class BSSocket {
         }
     }
 
-    private void verbindeMitGegner(String host, int portGegner) {
+    public void verbindeMitGegner() {
         Runnable r = () -> {
             try {
                 System.out.printf("Kontaktiere Gegner auf %s:%d...%n",host, portGegner);
@@ -51,19 +57,11 @@ public class BSSocket {
                 e.printStackTrace();
             }
         };
-        Thread t = new Thread(r);
-        t.start();
+        new Thread(r).start();
     }
 
     private void createSocket(int port) throws IOException {
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                lausche(port);
-            }
-        };
-        Thread t = new Thread(r);
-        t.start();
+        new Thread(() -> lausche(port)).start();
     }
 
     private void lausche(int port) {
@@ -77,8 +75,10 @@ public class BSSocket {
             aktiv = true;
             while (aktiv) {
                 Object nachricht = in.readObject();
-                if (nachricht instanceof Zug) { verarbeite((Zug) nachricht); }
-                else if (nachricht instanceof Antwort) { verarbeite((Antwort) nachricht); }
+                Platform.runLater(() -> {
+                    if (nachricht instanceof Zug) { verarbeite(this, (Zug) nachricht); }
+                    else if (nachricht instanceof Antwort) { verarbeite((Antwort) nachricht); }
+                });
             }
             in.close();
         } catch (IOException | ClassNotFoundException e) {
@@ -86,14 +86,21 @@ public class BSSocket {
         }
     }
 
-    private void verarbeite(Zug zug) throws IOException {
-        out.writeObject(spielFeldService.aufZugReagieren(zug));
+    private void verarbeite(BSSocket bsSocket, Zug zug) {
+        System.out.println("Verarbeite Zug "+zug);
+        try {
+            bsSocket.out.writeObject(spielFeldService.aufZugReagieren(zug));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     private void verarbeite(Antwort antwort) {
+        System.out.println("Verarbeite Antwort "+antwort);
         spielFeldService.aufAntwortReagieren(antwort);
     }
 
     public void sendeZug(Zug zug) throws IOException {
-        out.writeObject(zug);
+        if (isConnected()) { out.writeObject(zug); }
+        else { System.out.println("Keine Verbindung!"); }
     }
 }
