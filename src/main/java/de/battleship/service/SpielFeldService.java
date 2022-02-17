@@ -8,4 +8,6 @@ public interface SpielFeldService {
     int[][] feldAendern(Zug zug, Antwort antwort, int[][] feld);
     String meldungFuerGuiErstellen(Antwort antwort);
     boolean schiffeEintragen();
+
+    int[][] getMeinSpielFeld();
 }

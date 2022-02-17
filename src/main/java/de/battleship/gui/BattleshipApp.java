@@ -45,6 +45,7 @@ public class BattleshipApp extends Application {
 
         primaryStage.setTitle("Schiffe eintragen");
         primaryStage.setScene(new Scene(root, 650, 400));
+        primaryStage.sizeToScene();
         primaryStage.setResizable(false);
         primaryStage.show();
     }
@@ -57,7 +58,8 @@ public class BattleshipApp extends Application {
         spielController.setSpielFeldService(spielFeldService);
 
         primaryStage.setTitle("Spiel");
-        primaryStage.setScene(new Scene(root, 600, 400));
+        primaryStage.setScene(new Scene(root, 670, 430));
+        primaryStage.sizeToScene();
         primaryStage.setResizable(false);
         primaryStage.show();
     }
@@ -65,4 +67,12 @@ public class BattleshipApp extends Application {
     public int[][] getFeld() { return schiffeEintragenController.getFeld(); }
 
     public void setMeldung(String meldung) { schiffeEintragenController.setMeldung(meldung); }
+
+    public void setSpielmeldung(String meldung) {
+        spielController.setlSpielmeldung(meldung);
+    }
+
+    public void setMeinFeld(int[][] meinFeld) {
+        spielController.setMeinFeld(meinFeld);
+    }
 }

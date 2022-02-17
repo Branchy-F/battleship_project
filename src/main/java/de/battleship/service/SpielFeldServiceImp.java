@@ -54,6 +54,7 @@ public class SpielFeldServiceImp implements SpielFeldService {
     @Override
     //'x' und 'y' von der GUI erhalten
     public void zugAbschicken(int x, int y){
+        app.setSpielmeldung("Zug abgeschickt");
         Zug zug = new Zug(x, y);
         try {
             bs.sendeZug(zug);
@@ -64,15 +65,15 @@ public class SpielFeldServiceImp implements SpielFeldService {
 
     @Override
     public void aufAntwortReagieren(Antwort antwort){
-        //app.setFeldGegner(feldAendern(zug, antwort, spielFeldGegner));
-        //app.setMeldung(meldungFuerGuiErstellen(antwort));
+//        app.setFeldGegner(feldAendern(zug, antwort, spielFeldGegner));
+        app.setSpielmeldung(meldungFuerGuiErstellen(antwort));
     }
 
     @Override
     public Antwort aufZugReagieren(Zug zug){
         Antwort antwort = antwortErstellen(zug);
-        //app.setMeinFeld(feldAendern(zug, antwort, meinSpielFeld));
-        //app.setMeldung(meldungFuerGuiErstellen(antwort));
+        app.setMeinFeld(feldAendern(zug, antwort, meinSpielFeld));
+        app.setSpielmeldung(meldungFuerGuiErstellen(antwort));
         return antwort;
     }
 
@@ -125,5 +126,10 @@ public class SpielFeldServiceImp implements SpielFeldService {
             if (antwort.isSchonMalGeschossen()) { meldung = "Sinnlos (weil schon mal dorthin geschossen)"; }
         }
         return meldung;
+    }
+
+    @Override
+    public int[][] getMeinSpielFeld() {
+        return meinSpielFeld;
     }
 }
