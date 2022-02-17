@@ -16,10 +16,10 @@ public class SpielFeldServiceImp implements SpielFeldService {
     public SpielFeldServiceImp(BattleshipApp app) {
         backendDAO = new BackendDAOImp();
         this.app = app;
-        try {
-            bs = new BSSocket(this,"localhost", 22000, 22001);
+      //  try {
+        //    bs = new BSSocket(this,"localhost", 22000, 22001);
 //            bs = new BSSocket(this, "localhost", 22001, 22000);
-        } catch (IOException e) { e.printStackTrace(); }
+        //} catch (IOException e) { e.printStackTrace(); }
     }
 
     public SpielFeldServiceImp() { //für Testzwecke

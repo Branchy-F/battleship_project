@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minWidth="600.0" prefHeight="402.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.battleship.gui.SpielController">
+<AnchorPane minWidth="600.0" prefHeight="400.0" prefWidth="790.0" style="-fx-background-color: #3D4956;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.battleship.gui.SpielController">
    <children>
       <VBox alignment="CENTER" prefHeight="401.0" prefWidth="600.0" spacing="15.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
          <children>
@@ -18,9 +18,9 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="272.0" prefWidth="260.0" spacing="15.0">
                      <children>
-                        <Label text="Deine Flotte">
+                        <Label text="Deine Flotte" textFill="WHITE">
                            <font>
-                              <Font size="18.0" />
+                              <Font name="Copperplate" size="22.0" />
                            </font>
                         </Label>
                         <VBox id="vbMeinFeld" fx:id="vbMeinFeld" alignment="CENTER" prefHeight="250.0" prefWidth="250.0" />
@@ -31,9 +31,9 @@
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="272.0" prefWidth="260.0" spacing="15.0">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" text="Gegnerische Flotte">
+                        <Label alignment="CENTER" contentDisplay="CENTER" text="Gegnerische Flotte" textFill="WHITE">
                            <font>
-                              <Font size="18.0" />
+                              <Font name="Copperplate" size="22.0" />
                            </font>
                         </Label>
                         <VBox id="vbGegnerFeld" fx:id="vbGegnerFeld" alignment="CENTER" prefHeight="250.0" prefWidth="250.0" />
