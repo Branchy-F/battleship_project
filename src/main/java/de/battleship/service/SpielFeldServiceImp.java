@@ -11,15 +11,26 @@ public class SpielFeldServiceImp implements SpielFeldService {
     private BattleshipApp app;
     private int[][] spielFeldGegner = new int[10][10];
     private int[][] meinSpielFeld = new int[10][10];
+    private Zug letzterZug;
     BSSocket bs;
 
     public SpielFeldServiceImp(BattleshipApp app) {
         backendDAO = new BackendDAOImp();
         this.app = app;
-//        try {
+    }
+
+    @Override
+    public void verbindungErstellen(){
+        app.setSpielmeldung("Verbinde...");
+        try {
 //            bs = new BSSocket(this,"localhost", 22000, 22001);
-////            bs = new BSSocket(this, "localhost", 22001, 22000);
-//        } catch (IOException e) { e.printStackTrace(); }
+            bs = new BSSocket(this, "localhost", 22001, 22000);
+        } catch (IOException e) { app.setSpielmeldung("Fehler: IOException in SpielFeldServiceImp"); }
+    }
+
+    @Override
+    public BattleshipApp getApp() {
+        return app;
     }
 
     public SpielFeldServiceImp() { //für Testzwecke
@@ -63,12 +74,12 @@ public class SpielFeldServiceImp implements SpielFeldService {
         }
     }
 
-    @Override //testen
-    //'x' und 'y' von der GUI erhalten
+    @Override
     public boolean zugAbschicken(int x, int y){
         Zug zug = new Zug(x, y);
         try {
             bs.sendeZug(zug);
+            letzterZug = zug;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -77,15 +88,17 @@ public class SpielFeldServiceImp implements SpielFeldService {
 
     @Override
     public void aufAntwortReagieren(Antwort antwort){
-//        app.setFeldGegner(feldAendern(zug, antwort, spielFeldGegner));
-        app.setSpielmeldung(meldungFuerGuiErstellen(antwort));
+        app.setAntwort(meldungFuerGuiErstellen(antwort));
+        spielFeldGegner = feldAendern(letzterZug, antwort, spielFeldGegner);
+        app.setGegnerFeldGegnerZug(spielFeldGegner);
     }
 
     @Override
     public Antwort aufZugReagieren(Zug zug){
         Antwort antwort = antwortErstellen(zug);
         app.setMeinFeld(feldAendern(zug, antwort, meinSpielFeld));
-        app.setSpielmeldung(meldungFuerGuiErstellen(antwort));
+        app.setGegnerFeldMeinZug(spielFeldGegner);
+        app.setAntwort(meldungFuerGuiErstellen(antwort));
         return antwort;
     }
 

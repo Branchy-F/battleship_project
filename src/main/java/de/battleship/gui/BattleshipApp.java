@@ -76,4 +76,16 @@ public class BattleshipApp extends Application {
     public void setMeinFeld(int[][] meinFeld) {
         spielController.setMeinFeld(meinFeld);
     }
+
+    public void setGegnerFeldGegnerZug(int[][] gegnerFeld) {
+        spielController.setGegnerFeldGegnerZug(gegnerFeld);
+    }
+
+    public void setGegnerFeldMeinZug(int[][] gegnerFeld) {
+        spielController.setGegnerFeldmeinZug(gegnerFeld);
+    }
+
+    public void setAntwort(String antwort) {
+        spielController.setAntwort(antwort);
+    }
 }
