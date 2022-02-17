@@ -68,9 +68,10 @@ public class SpielFeldServiceImp implements SpielFeldService {
     }
 
     @Override
-    public void aufAntwortReagieren(Antwort antwort){
+    public boolean aufAntwortReagieren(Antwort antwort){
         //app.setFeldGegner(feldAendern(zug, antwort, spielFeldGegner));
         //app.setMeldung(meldungFuerGuiErstellen(antwort));
+        return true;
     }
 
     @Override

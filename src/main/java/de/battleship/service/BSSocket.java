@@ -86,6 +86,8 @@ public class BSSocket {
         }
     }
 
+
+    // zu testen
     private void verarbeite(Zug zug) throws IOException {
         out.writeObject(spielFeldService.aufZugReagieren(zug));
     }
