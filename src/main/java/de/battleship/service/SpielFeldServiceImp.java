@@ -2,19 +2,18 @@ package de.battleship.service;
 
 import de.battleship.dao.BackendDAO;
 import de.battleship.dao.BackendDAOImp;
-import de.battleship.gui.SchiffeEintragenController;
-
+import de.battleship.gui.BattleshipApp;
 import java.io.IOException;
 import java.util.Arrays;
 
 public class SpielFeldServiceImp implements SpielFeldService {
     private final BackendDAO backendDAO;
-    private SchiffeEintragenController app;
+    private BattleshipApp app;
     private int[][] spielFeldGegner = new int[10][10];
     private int[][] meinSpielFeld = new int[10][10];
     BSSocket bs;
 
-    public SpielFeldServiceImp(SchiffeEintragenController app) {
+    public SpielFeldServiceImp(BattleshipApp app) {
         backendDAO = new BackendDAOImp();
         this.app = app;
         try {
@@ -43,15 +42,24 @@ public class SpielFeldServiceImp implements SpielFeldService {
             return true;
         } else {
             int[] anzahlSchiffe = backendDAO.getAnzahlSchiffe(app.getFeld(), 1,2,3,4);
-            StringBuilder stringBuilder = new StringBuilder("Tragen Sie");
-            if (anzahlSchiffe[0] != 1) { stringBuilder.append("\n 1 Schlachtschiff (4Kästchen)"); }
-            if (anzahlSchiffe[1] != 2) { stringBuilder.append(String.format("\n %d Kreuzer (3 Kästchen)", 2-anzahlSchiffe[1])); }
-            if (anzahlSchiffe[2] != 3) { stringBuilder.append(String.format("\n %d Zerstörer (2 Kästchen)", 3-anzahlSchiffe[2])); }
-            if (anzahlSchiffe[3] != 4) { stringBuilder.append(String.format("\n %d U-Boote", 4-anzahlSchiffe[3])); }
-            stringBuilder.append(" ein.");
 
-            app.setMeldung(stringBuilder.toString());
-            return false;
+            if (anzahlSchiffe[0] == -1){ //Warnung von Validator
+                app.setMeldung("Ein Schiff wurde\nfalsch eingetragen!");
+                return false;
+            }
+            else{
+                StringBuilder stringBuilder = new StringBuilder("Schiffe eintragen:");
+                String[] schiffe = {"U-Boote", "Zerstörer", "Kreuzer", "Schlachtschiff"};
+                for(int i = 0, j=4; i <= 3; i++, j--){
+                    if (anzahlSchiffe[i] < i+1) {
+                        stringBuilder.append(String.format("\n %d %s (%d Kästchen)", (i+1)-anzahlSchiffe[i], schiffe[j-1], j));
+                    } else if (anzahlSchiffe[i] > i+1) {
+                        stringBuilder.append(String.format("\n Zu viele %d-Kästchen-Schiffe!", j));
+                    }
+                }
+                app.setMeldung(stringBuilder.toString());
+                return false;
+            }
         }
     }
 
@@ -69,15 +77,15 @@ public class SpielFeldServiceImp implements SpielFeldService {
 
     @Override
     public void aufAntwortReagieren(Antwort antwort){
-        //app.setFeldGegner(feldAendern(zug, antwort, spielFeldGegner));
-        //app.setMeldung(meldungFuerGuiErstellen(antwort));
+//        app.setFeldGegner(feldAendern(zug, antwort, spielFeldGegner));
+        app.setSpielmeldung(meldungFuerGuiErstellen(antwort));
     }
 
     @Override
     public Antwort aufZugReagieren(Zug zug){
         Antwort antwort = antwortErstellen(zug);
-        //app.setMeinFeld(feldAendern(zug, antwort, meinSpielFeld));
-        //app.setMeldung(meldungFuerGuiErstellen(antwort));
+        app.setMeinFeld(feldAendern(zug, antwort, meinSpielFeld));
+        app.setSpielmeldung(meldungFuerGuiErstellen(antwort));
         return antwort;
     }
 
@@ -139,5 +147,10 @@ public class SpielFeldServiceImp implements SpielFeldService {
             if (antwort.isSchonMalGeschossen()) { meldung = "Sinnlos (weil schon mal dorthin geschossen)"; }
         }
         return meldung;
+    }
+
+    @Override
+    public int[][] getMeinSpielFeld() {
+        return meinSpielFeld;
     }
 }
