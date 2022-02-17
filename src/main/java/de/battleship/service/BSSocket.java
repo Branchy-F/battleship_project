@@ -1,5 +1,7 @@
 package de.battleship.service;
 
+import javafx.application.Platform;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -51,8 +53,7 @@ public class BSSocket {
                 e.printStackTrace();
             }
         };
-        Thread t = new Thread(r);
-        t.start();
+        Platform.runLater(r);
     }
 
     private void createSocket(int port) throws IOException {
@@ -62,8 +63,7 @@ public class BSSocket {
                 lausche(port);
             }
         };
-        Thread t = new Thread(r);
-        t.start();
+        Platform.runLater(r);
     }
 
     private void lausche(int port) {
@@ -94,6 +94,7 @@ public class BSSocket {
     }
 
     public void sendeZug(Zug zug) throws IOException {
-        out.writeObject(zug);
+        if (isConnected()) { out.writeObject(zug); }
+        else { System.out.println("Keine Verbindung!"); }
     }
 }

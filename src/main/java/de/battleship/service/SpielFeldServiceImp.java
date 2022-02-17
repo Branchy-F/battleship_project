@@ -21,24 +21,18 @@ public class SpielFeldServiceImp implements SpielFeldService {
 
     @Override
     public void verbindungErstellen(){
-        app.setSpielmeldung("Verbinde...");
-        try {
-//            bs = new BSSocket(this,"localhost", 22000, 22001);
-            bs = new BSSocket(this, "localhost", 22001, 22000);
-        } catch (IOException e) { app.setSpielmeldung("Fehler: IOException in SpielFeldServiceImp"); }
-    }
-
-    @Override
-    public BattleshipApp getApp() {
-        return app;
-    }
-
-    public SpielFeldServiceImp() { //für Testzwecke
-        backendDAO = new BackendDAOImp();
         try {
             bs = new BSSocket(this,"localhost", 22000, 22001);
 //            bs = new BSSocket(this, "localhost", 22001, 22000);
         } catch (IOException e) { e.printStackTrace(); }
+    }
+
+    public SpielFeldServiceImp() { //für Testzwecke
+        backendDAO = new BackendDAOImp();
+//        try {
+//            bs = new BSSocket(this,"localhost", 22000, 22001);
+////            bs = new BSSocket(this, "localhost", 22001, 22000);
+//        } catch (IOException e) { e.printStackTrace(); }
 //        try {
 //            bs = new BSSocket(this,"192.168.1.10", 22000, 22001);
 ////            bs = new BSSocket(this, "192.168.1.11", 22001, 22000);

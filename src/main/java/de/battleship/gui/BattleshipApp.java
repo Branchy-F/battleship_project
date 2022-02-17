@@ -37,6 +37,8 @@ public class BattleshipApp extends Application {
     }
 
     public void zweitesFensterOeffnen() throws IOException {
+        spielFeldService.verbindungErstellen();
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("schiffeEintragen.fxml"));
         Parent root = loader.load();
         schiffeEintragenController = loader.getController();

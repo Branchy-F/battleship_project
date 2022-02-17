@@ -106,6 +106,6 @@ public class SpielController implements Initializable {
     }
 
     public void VerbindungErstellen(ActionEvent actionEvent) {
-        spielFeldService.verbindungErstellen();
+//        spielFeldService.verbindungErstellen();
     }
 }
