@@ -9,4 +9,5 @@ public interface SpielFeldService {
     String meldungFuerGuiErstellen(Antwort antwort);
     boolean schiffeEintragen();
     int[][] getMeinSpielFeld();
+    boolean istValide(int[][] feld);
 }

@@ -16,6 +16,18 @@ public class SpielFeldServiceImp implements SpielFeldService {
     public SpielFeldServiceImp(BattleshipApp app) {
         backendDAO = new BackendDAOImp();
         this.app = app;
+        try {
+            bs = new BSSocket(this,"localhost", 22000, 22001);
+//            bs = new BSSocket(this, "localhost", 22001, 22000);
+        } catch (IOException e) { e.printStackTrace(); }
+    }
+
+    public SpielFeldServiceImp() { //für Testzwecke
+        backendDAO = new BackendDAOImp();
+        try {
+            bs = new BSSocket(this,"localhost", 22000, 22001);
+//            bs = new BSSocket(this, "localhost", 22001, 22000);
+        } catch (IOException e) { e.printStackTrace(); }
 //        try {
 //            bs = new BSSocket(this,"192.168.1.10", 22000, 22001);
 ////            bs = new BSSocket(this, "192.168.1.11", 22001, 22000);
@@ -78,6 +90,15 @@ public class SpielFeldServiceImp implements SpielFeldService {
     }
 
     @Override
+    public boolean istValide(int[][] feld) {
+        if(backendDAO.istValide(feld, 1,2,3,4)){
+            meinSpielFeld = Arrays.stream(feld).map(int[]::clone).toArray(int[][]::new);
+            return true;
+        }
+        return false;
+    }
+
+    @Override // testen
     public Antwort antwortErstellen(Zug zug){
         int x = zug.getX();
         int y = zug.getY();
@@ -94,7 +115,7 @@ public class SpielFeldServiceImp implements SpielFeldService {
         return antwort;
     }
 
-    @Override
+    @Override //Nicht ändern
     //'0'-leer, '1'-Schiff, '5' - daneben geschossen, '8'-getroffen, '9'-versenkt
     public int[][] feldAendern(Zug zug, Antwort antwort, int[][] feld){
         int x = zug.getX();

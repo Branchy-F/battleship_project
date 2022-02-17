@@ -93,5 +93,7 @@ public class BSSocket {
         spielFeldService.aufAntwortReagieren(antwort);
     }
 
-    public void sendeZug(Zug zug) throws IOException { out.writeObject(zug); }
+    public void sendeZug(Zug zug) throws IOException {
+        out.writeObject(zug);
+    }
 }
